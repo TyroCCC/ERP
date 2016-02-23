@@ -11,6 +11,8 @@ function GetModule(){
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
 	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
+	$rows = ToolMethod::Instance()->GetUrlParam("rows");//行数
+	$page = ToolMethod::Instance()->GetUrlParam("page");//页码
 
 	$str = "";
 	if($ModuleId != ""){
@@ -31,7 +33,10 @@ function GetModule(){
 		".$str."
 		order by Seq
 	";
-	echo DB::Instance()->UnPageJson(Config::Instance()->DB_Config, $sql);
+
+	$PagingSql = ToolMethod::Instance()->GetPagingSql($sql, $rows, $page);//sql、行数、页码
+	$CountSql = ToolMethod::Instance()->GetCountSql($sql);//总数sql
+	echo DB::Instance()->PageJson(Config::Instance()->DB_Config, $PagingSql, $CountSql);//获取分页json
 }
 
 // 增加模块数据

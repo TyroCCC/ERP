@@ -26,11 +26,7 @@ function GetModule(){
 		$str = " where ".ltrim($str, " and");
 	}
 
-	$sql = "select ModuleId,ModuleName,IsActive,Seq
-		from g_module
-		".$str."
-		order by Seq
-	";
+	$sql = "select PageId,PageName,ModuleId,Controller,OuterLink,IsActive from g_page ".$str;
 	echo DB::Instance()->UnPageJson(Config::Instance()->DB_Config, $sql);
 }
 
