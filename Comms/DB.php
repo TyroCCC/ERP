@@ -87,6 +87,150 @@ class DB{
 
 
 
+	// 测试代码 用于动态生成 sql
+	public function GetTbColumnName($DBID, $tb){
+		$sql = "select column_name
+			from information_schema.columns 
+			where table_name = '".$tb."' and table_schema = 'config'";
+		return SqlHelper::Instance()->Get2Arr($DBID, $sql);
+	}
+	public function GetSelectSql($DBID, $tb, $type){
+		$colomnsArr = self::GetTbColumnName($DBID, $tb);
+		$str = "";
+		for ($i=0; $i < count($colomnsArr); $i++) {
+			$k = $colomnsArr[$i][0]["value"];//键
+
+			if($type == "get"){
+				$v = ToolMethod::Instance()->GetUrlParam($k);//值
+			}
+			else if(type == "post"){
+				$v = ToolMethod::Instance()->GetPostParam($k);
+			}
+			if($v != ""){
+				$str .= " and ".$k." like '%".$v."%'";
+			}
+		}
+		if($str != ""){
+			$str = " where ".ltrim($str, " and");
+		}
+		return "select * from ".$tb.$str;
+	}
+	public function GetInsertSql($DBID, $tb, $type){
+		$colomnsArr = self::GetTbColumnName($DBID, $tb);
+		$str = "";
+		$str1 = "";
+		for ($i=0; $i < count($colomnsArr); $i++) {
+			$k = $colomnsArr[$i][0]["value"];//键
+
+			if($type == "get"){
+				$v = ToolMethod::Instance()->GetUrlParam($k);//值
+			}
+			else if(type == "post"){
+				$v = ToolMethod::Instance()->GetPostParam($k);
+			}
+			if($v != ""){
+				$str .= "'".$v."',";
+				$str1 .= $k.",";
+			}
+		}
+		$str = rtrim($str, ",");
+		$str1 = rtrim($str1, ",");
+
+		return "insert into ".$tb."(".$str1.") values(".$str.")";
+	}
+	public function GetDeleteSql($DBID, $tb, $type){
+		$colomnsArr = self::GetTbColumnName($DBID, $tb);
+		$str = "";
+		for ($i=0; $i < count($colomnsArr); $i++) {
+			$k = $colomnsArr[$i][0]["value"];//键
+
+			if($type == "get"){
+				$v = ToolMethod::Instance()->GetUrlParam($k);//值
+			}
+			else if(type == "post"){
+				$v = ToolMethod::Instance()->GetPostParam($k);
+			}
+			if($v != ""){
+				$str .= " and ".$k."='".$v."'";
+			}
+		}
+		if($str != ""){
+			$str = " where ".ltrim($str, " and");
+		}
+		return "delete from ".$tb.$str;
+	}
+	public function GetModifySql($DBID, $tb, $type){
+		$colomnsArr = self::GetTbColumnName($DBID, $tb);
+		$str = "";
+		$str1 = "";
+		for ($i=0; $i < count($colomnsArr); $i++) {
+			$k = $colomnsArr[$i][0]["value"];//键
+
+			if($type == "get"){
+				$v = ToolMethod::Instance()->GetUrlParam($k);//值
+			}
+			else if(type == "post"){
+				$v = ToolMethod::Instance()->GetPostParam($k);
+			}
+			if($v != ""){
+				$str .= $k."="."'".$v."',";
+			}
+
+			//筛选条件
+			if($type == "get"){
+				$v1 = ToolMethod::Instance()->GetUrlParam("old_".$k);//值
+			}
+			else if(type == "post"){
+				$v1 = ToolMethod::Instance()->GetPostParam("old_".$k);
+			}
+			if($v1 != ""){
+				$str1 .= " and ".$k."="."'".$v1."'";
+			}
+		}
+		$str = rtrim($str, ",");
+		if($str1 != ""){
+			$str1 = " where ".ltrim($str1, " and");
+		}
+
+		return "update ".$tb." set ".$str.$str1;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
