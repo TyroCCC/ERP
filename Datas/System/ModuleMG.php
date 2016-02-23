@@ -11,6 +11,7 @@ function GetModule(){
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
 	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
+	
 	$rows = ToolMethod::Instance()->GetUrlParam("rows");//行数
 	$page = ToolMethod::Instance()->GetUrlParam("page");//页码
 

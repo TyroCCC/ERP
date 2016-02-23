@@ -7,72 +7,94 @@
 
 
 // 获取页面数据
-function GetModule(){
+function GetPage(){
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
+	$PageName = ToolMethod::Instance()->GetUrlParam("PageName");
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
-	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
+	$Controller = ToolMethod::Instance()->GetUrlParam("Controller");
+	$OuterLink = ToolMethod::Instance()->GetUrlParam("OuterLink");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
 
+	$rows = ToolMethod::Instance()->GetUrlParam("rows");
+	$page = ToolMethod::Instance()->GetUrlParam("page");
+
 	$str = "";
+	if($PageId != ""){
+		$str .= " and PageId like '".$PageId."'";
+	}
+	if($PageName != ""){
+		$str .= " and PageName like '".$PageName."'";
+	}
 	if($ModuleId != ""){
 		$str .= " and ModuleId like '".$ModuleId."'";
 	}
-	if($ModuleName != ""){
-		$str .= " and ModuleName like '".$ModuleName."'";
+	if($Controller != ""){
+		$str .= " and Controller like '".$Controller."'";
+	}
+	if($OuterLink != ""){
+		$str .= " and ModuleId like '".$OuterLink."'";
 	}
 	if($IsActive != ""){
-		$str .= " and IsActive = '".$IsActive."'";
+		$str .= " and IsActive like '".$IsActive."'";
 	}
 	if($str != ""){
 		$str = " where ".ltrim($str, " and");
 	}
 
 	$sql = "select PageId,PageName,ModuleId,Controller,OuterLink,IsActive from g_page ".$str;
-	echo DB::Instance()->UnPageJson(Config::Instance()->DB_Config, $sql);
+	$PagingSql = ToolMethod::Instance()->GetPagingSql($sql, $rows, $page);
+	$CountSql = ToolMethod::Instance()->GetCountSql($sql);
+	echo DB::Instance()->PageJson(Config::Instance()->DB_Config, $PagingSql, $CountSql);
 }
 
 // 增加页面数据
-function AddModule(){
+function AddPage(){
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
+	$PageName = ToolMethod::Instance()->GetUrlParam("PageName");
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
-	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
+	$Controller = ToolMethod::Instance()->GetUrlParam("Controller");
+	$OuterLink = ToolMethod::Instance()->GetUrlParam("OuterLink");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
-	$Seq = ToolMethod::Instance()->GetUrlParam("Seq");
 
-	if($ModuleId == ""){
-		echo ToolMethod::Instance()->GetErrJsonStr("请输入模块ID");
+	if($PageId == ""){
+		echo ToolMethod::Instance()->GetErrJsonStr("请输入页面ID");
 		return;
 	}
 
-	$sql = "insert into g_module(ModuleId,ModuleName,IsActive,Seq)
-		values('".$ModuleId."','".$ModuleName."','".$IsActive."','".$Seq."')
+	$sql = "insert into g_page(PageId,PageName,ModuleId,Controller,OuterLink,IsActive)
+		values('".$PageId."','".$PageName."','".$ModuleId."','".$Controller."','".$OuterLink."','".$IsActive."')
 	";
 	echo DB::Instance()->Execute(Config::Instance()->DB_Config, $sql);
 }
 
 // 删除页面数据
-function DelModule(){
-	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
+function DelPage(){
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 
-	$sql = "delete from g_module where ModuleId='".$ModuleId."'";
+	$sql = "delete from g_page where PageId='".$PageId."'";
 
 	echo DB::Instance()->Execute(Config::Instance()->DB_Config, $sql);
 }
 
 // 修改页面数据
-function MdfModule(){
-	$OldModuleId = ToolMethod::Instance()->GetUrlParam("OldModuleId");
+function MdfPage(){
+	$OldPageId = ToolMethod::Instance()->GetUrlParam("OldPageId");
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
+	$PageName = ToolMethod::Instance()->GetUrlParam("PageName");
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
-	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
+	$Controller = ToolMethod::Instance()->GetUrlParam("Controller");
+	$OuterLink = ToolMethod::Instance()->GetUrlParam("OuterLink");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
-	$Seq = ToolMethod::Instance()->GetUrlParam("Seq");
 
-	if($ModuleId == "" || $OldModuleId == ""){
-		echo ToolMethod::Instance()->GetErrJsonStr("请输入模块ID");
+	if($PageId == ""){
+		echo ToolMethod::Instance()->GetErrJsonStr("请输入页面ID");
 		return;
 	}
 
-	$sql = "update g_module
-		set ModuleId='".$ModuleId."',ModuleName='".$ModuleName."',IsActive='".$IsActive."',Seq='".$Seq."'
-		where ModuleId='".$OldModuleId."'
+	$sql = "update g_page
+		set PageId='".$PageId."',PageName='".$PageName."',ModuleId='".$ModuleId."'"
+		.",Controller='".$Controller."',OuterLink='".$OuterLink."',IsActive='".$IsActive."'
+		where PageId='".$OldPageId."'
 	";
 	echo DB::Instance()->Execute(Config::Instance()->DB_Config, $sql);
 }
