@@ -69,20 +69,20 @@ function DelModule(){
 
 // 修改模块数据
 function MdfModule(){
-	$OldModuleId = ToolMethod::Instance()->GetUrlParam("OldModuleId");
+	$old_ModuleId = ToolMethod::Instance()->GetUrlParam("old_ModuleId");
 	$ModuleId = ToolMethod::Instance()->GetUrlParam("ModuleId");
 	$ModuleName = ToolMethod::Instance()->GetUrlParam("ModuleName");
 	$IsActive = ToolMethod::Instance()->GetUrlParam("IsActive");
 	$Seq = ToolMethod::Instance()->GetUrlParam("Seq");
 
-	if($ModuleId == "" || $OldModuleId == ""){
+	if($ModuleId == "" || $old_ModuleId == ""){
 		echo ToolMethod::Instance()->GetErrJsonStr("请输入模块ID");
 		return;
 	}
 
 	$sql = "update g_module
 		set ModuleId='".$ModuleId."',ModuleName='".$ModuleName."',IsActive='".$IsActive."',Seq='".$Seq."'
-		where ModuleId='".$OldModuleId."'
+		where ModuleId='".$old_ModuleId."'
 	";
 	echo DB::Instance()->Execute(Config::Instance()->DB_Config, $sql);
 }
