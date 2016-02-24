@@ -23,7 +23,7 @@
 				});
 
 				$(".btnTest").on("click", function(){
-					$.getJSON("../../../Data.php/System/PageMG/MdfPage?old_PageId=test&PageId=1&PageName=2&ModuleId=3&Controller=4&OuterLink=5&IsActive=6&rows=5&page=1", function(data){
+					$.getJSON("../../../Data.php/System/MenuMG/GetMenu?old_PageId=test&PageId=1&PageName=2&ModuleId=3&Controller=4&OuterLink=5&IsActive=6&rows=5&page=1", function(data){
 						if(data.result != "OK"){
 							alert(data.reason);
 						}

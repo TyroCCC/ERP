@@ -94,7 +94,7 @@ class DB{
 			where table_name = '".$tb."' and table_schema = 'config'";
 		return SqlHelper::Instance()->Get2Arr($DBID, $sql);
 	}
-	public function GetSelectSql($DBID, $tb, $type){
+	public function GetSelectSql($DBID, $tb, $type, $ComparisonSign){
 		$colomnsArr = self::GetTbColumnName($DBID, $tb);
 		$str = "";
 		for ($i=0; $i < count($colomnsArr); $i++) {
@@ -107,7 +107,15 @@ class DB{
 				$v = ToolMethod::Instance()->GetPostParam($k);
 			}
 			if($v != ""){
-				$str .= " and ".$k." like '%".$v."%'";
+				if($ComparisonSign == "like"){
+					$str .= " and ".$k." ".$ComparisonSign." '%".$v."%'";
+				}
+				else if($ComparisonSign == "in"){
+					$str .= " and ".$k." ".$ComparisonSign." (".$v.")";
+				}
+				else{
+					$str .= " and ".$k." ".$ComparisonSign." '".$v."'";
+				}
 			}
 		}
 		if($str != ""){
@@ -151,7 +159,7 @@ class DB{
 				$v = ToolMethod::Instance()->GetPostParam($k);
 			}
 			if($v != ""){
-				$str .= " and ".$k."='".$v."'";
+				$str .= " and ".$k." = '".$v."'";
 			}
 		}
 		if($str != ""){
@@ -173,7 +181,7 @@ class DB{
 				$v = ToolMethod::Instance()->GetPostParam($k);
 			}
 			if($v != ""){
-				$str .= $k."="."'".$v."',";
+				$str .= $k." = "."'".$v."',";
 			}
 
 			//筛选条件
@@ -184,7 +192,7 @@ class DB{
 				$v1 = ToolMethod::Instance()->GetPostParam("old_".$k);
 			}
 			if($v1 != ""){
-				$str1 .= " and ".$k."="."'".$v1."'";
+				$str1 .= " and ".$k." = "."'".$v1."'";
 			}
 		}
 		$str = rtrim($str, ",");
