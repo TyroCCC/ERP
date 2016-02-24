@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-02-23 21:36:46
+# Date: 2016-02-24 18:54:44
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -135,6 +135,7 @@ CREATE TABLE `r_page_form` (
   `ValType` varchar(255) DEFAULT NULL COMMENT '值类型',
   `ComparisonSign` varchar(255) DEFAULT NULL COMMENT '比较符号',
   `DBField` varchar(255) DEFAULT NULL COMMENT '数据库比较的相对字段',
+  `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
   PRIMARY KEY (`PageId`,`FormId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
