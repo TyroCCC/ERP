@@ -16,20 +16,12 @@
 		<script>
 			(function(){
 				$(function(){
-					// GetModule、GetTreeMenuByModuleId、GetCurPageParams
-					// $.get("../../../Data.php/Comm/Env/GetCurPageParams", function(data){//获取当前页面的配置参数
-					// 	//alert(data);
-					// });
+					$.getJSON("../../../Data.php/Comm/r_Env/GetPageParam", function(data){
+					});
 				});
 
 				$(".btnTest").on("click", function(){
-					$.getJSON("../../../Data.php/System/MenuMG/GetMenu?old_PageId=test&PageId=1&PageName=2&ModuleId=3&Controller=4&OuterLink=5&IsActive=6&rows=5&page=1", function(data){
-						if(data.result != "OK"){
-							alert(data.reason);
-						}
-						else{
-							alert(data.result);
-						}
+					$.getJSON("../../../Data.php/Comm/r_Env/GetData" + window.location.search, function(data){
 					});
 				});
 			})();

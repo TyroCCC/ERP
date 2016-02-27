@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-02-24 18:54:44
+# Date: 2016-02-27 23:11:38
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -92,6 +92,7 @@ CREATE TABLE `r_page_base` (
 # Data for table "r_page_base"
 #
 
+INSERT INTO `r_page_base` VALUES ('100000','100%','100%','#fff','1','10','select * from g_module','0,1,2,3','0,1,2','0,1,2,3');
 
 #
 # Structure for table "r_page_btn"
@@ -100,8 +101,8 @@ CREATE TABLE `r_page_base` (
 DROP TABLE IF EXISTS `r_page_btn`;
 CREATE TABLE `r_page_btn` (
   `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '按钮标记',
   `BtnId` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮Id',
-  `BtnClass` varchar(255) DEFAULT NULL COMMENT '按钮类名',
   `BtnName` varchar(255) DEFAULT NULL COMMENT '按钮名',
   `IconCls` varchar(255) DEFAULT NULL COMMENT '按钮图标类名',
   `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
@@ -110,13 +111,14 @@ CREATE TABLE `r_page_btn` (
   `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
   `Action` varchar(255) DEFAULT NULL COMMENT '方法',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
-  PRIMARY KEY (`PageId`,`BtnId`)
+  PRIMARY KEY (`PageId`,`Id`,`BtnId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
 
 #
 # Data for table "r_page_btn"
 #
 
+INSERT INTO `r_page_btn` VALUES ('100000',0,'Btn-Add','增加','icon-add','100px','30px','#fff','dialog',NULL,'1'),('100000',1,'Btn-Del','删除','icon-del','100px','30px','#fff','get',NULL,'1'),('100000',2,'Btn-Mdf','修改','icon-edit','100px','30px','#fff','dialog',NULL,'1'),('100000',3,'Btn-Search','查询','icon-search','100px','30px','#fff','get',NULL,'1');
 
 #
 # Structure for table "r_page_form"
@@ -125,6 +127,7 @@ CREATE TABLE `r_page_btn` (
 DROP TABLE IF EXISTS `r_page_form`;
 CREATE TABLE `r_page_form` (
   `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '表单标记',
   `FormId` varchar(255) NOT NULL DEFAULT '' COMMENT '表单ID',
   `FormName` varchar(255) DEFAULT NULL COMMENT '表单标题',
   `FormType` varchar(255) DEFAULT NULL COMMENT '表单类型',
@@ -133,17 +136,19 @@ CREATE TABLE `r_page_form` (
   `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
   `DefaultVal` varchar(255) DEFAULT NULL COMMENT '默认值',
   `ValType` varchar(255) DEFAULT NULL COMMENT '值类型',
-  `ComparisonSign` varchar(255) DEFAULT NULL COMMENT '比较符号',
+  `ComparisonSign` varchar(255) DEFAULT '=' COMMENT '比较符号',
   `DBField` varchar(255) DEFAULT NULL COMMENT '数据库比较的相对字段',
+  `PostType` varchar(255) DEFAULT 'get' COMMENT '提交方式 Get/Post',
   `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
-  PRIMARY KEY (`PageId`,`FormId`)
+  PRIMARY KEY (`PageId`,`Id`,`FormId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
 
 #
 # Data for table "r_page_form"
 #
 
+INSERT INTO `r_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','like','ModuleName','get',0,'1'),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','=','ModuleId','get',0,'1'),('100000',2,'IsActive','是否激活','text','100px','30px','#fff',NULL,'string','=','IsActive','get',0,'1');
 
 #
 # Structure for table "r_page_grid"
@@ -152,7 +157,8 @@ CREATE TABLE `r_page_form` (
 DROP TABLE IF EXISTS `r_page_grid`;
 CREATE TABLE `r_page_grid` (
   `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
-  `FieldId` varchar(255) DEFAULT NULL COMMENT '字段Id',
+  `Id` varchar(255) NOT NULL DEFAULT '' COMMENT '字段标记',
+  `FieldId` varchar(255) NOT NULL DEFAULT '' COMMENT '字段Id',
   `FieldName` varchar(255) DEFAULT NULL COMMENT '字段名字',
   `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
   `Height` varchar(255) DEFAULT NULL COMMENT '高度',
@@ -160,10 +166,11 @@ CREATE TABLE `r_page_grid` (
   `IsDefaultSort` varchar(255) DEFAULT NULL COMMENT '是否默认排序',
   `IsJumpParam` varchar(255) DEFAULT NULL COMMENT '是否跳转所用参数',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
-  PRIMARY KEY (`PageId`)
+  PRIMARY KEY (`PageId`,`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面网格';
 
 #
 # Data for table "r_page_grid"
 #
 
+INSERT INTO `r_page_grid` VALUES ('100000','0','ModuleId','模块Id','100px','30px','#fff','1','1','1'),('100000','1','ModuleName','模块名','100px','30px','#fff','0','0','1'),('100000','2','IsActive','是否激活','100px','30px','#fff','0','0','1'),('100000','3','Seq','排序','100px','30px','#fff','0','0','1');

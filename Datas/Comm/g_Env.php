@@ -45,9 +45,4 @@ function GetTreeMenuByModuleId(){
 		}
 }
 
-// 获取当前页面参数
-function GetCurPageParams(){
-	$PageId = ToolMethod::Instance()->GetPageId();
-}
-
 ?>

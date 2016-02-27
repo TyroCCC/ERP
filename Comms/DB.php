@@ -31,6 +31,11 @@ class DB{
 		return $arr[1];
 	}
 
+	public function GetJsonWithPrimaryKey($DBID, $sql, $primaryKey){
+		$arr = SqlHelper::Instance()->GetJsonWithPrimaryKey($DBID, $sql, $primaryKey);
+		return $arr[1];
+	}
+
 	public function UnPageJson($DBID, $sql){
 		$arr = SqlHelper::Instance()->GetJson($DBID, $sql);
 		$total = $arr[0];

@@ -173,7 +173,7 @@ class ToolMethod{
 
 	//获取 easyui 表格控件 页码 参数, 默认为 1 
 	function GetEasyUiDataGridPage(){
-		$page = GetPostParam("page");
+		$page = self::GetPostParam("page");
 	 	if ($page == ""){
             $page = "1";
         }
@@ -182,7 +182,7 @@ class ToolMethod{
 
 	//获取 easyui 表格控件 行数 参数,默认为 10
 	function GetEasyUiDataGridRows(){
-		$rows = GetPostParam("rows");
+		$rows = self::GetPostParam("rows");
 		if ($rows == ""){
 			$rows = "10";
 		}
@@ -191,12 +191,12 @@ class ToolMethod{
 
 	//获取 easyui 表格控件 排序字段, 默认为 ""
 	function GetEasyUiDataGridSort(){
-		return GetPostParam("sort");
+		return self::GetPostParam("sort");
 	}
 
 	//获取 easyui 表格控件 排序规则,默认为 ""
 	function GetEasyUiDataGridOrder(){
-		return GetPostParam("order");
+		return self::GetPostParam("order");
 	}
 	
 }

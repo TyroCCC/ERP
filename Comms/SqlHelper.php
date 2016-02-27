@@ -87,6 +87,43 @@ class SqlHelper{
 		return $result;
 	}
 
+	//获取Mysql结果集中的数据 带主键
+	private function GetJsonStrWithPrimaryKeyFormTb($fieldArr, $result, $primaryKey){
+		$str = '';
+		$j = 0;
+		while($row = mysql_fetch_row($result)){//拼接json
+			$k = 0;
+			$rowStr = '{';
+			$mark = "";
+			foreach ($row as $key => $value) {
+				if($fieldArr[$k] == $primaryKey){
+					$mark .= '"'.$value.'":';//找出主键
+				}
+
+				$rowStr .= '"'.$fieldArr[$k].'":'.($value != null ? json_encode($value) : json_encode(""));//unicode编码
+				if($k <= count($row) -2){
+					$rowStr .= ',';
+				}
+				$k++;
+			}
+			$rowStr .= '}';
+			$rowStr = $mark.$rowStr;
+
+			$str .= $rowStr;
+			if($j <= mysql_num_rows($result) -2){
+				$str .= ',';
+			}
+			$j++;
+		}
+
+		$json = '{'.$str.'}';
+
+		$result = array();
+		$result[] = $j;
+		$result[] = $json;
+		return $result;
+	}
+
 
 
 
@@ -149,6 +186,18 @@ class SqlHelper{
 
 		$fieldArr = self::GetFieldsFromTb($result);
 		return self::GetJsonStrFormTb($fieldArr, $result);
+	}
+
+	//返回json
+	public function GetJsonWithPrimaryKey($DBID, $sql, $primaryKey){
+		$connect = self::Connect($DBID);
+		$result = mysql_query($sql, $connect);
+		if(!$result){
+			throw new Exception(mysql_error());//抛出错误
+		}
+
+		$fieldArr = self::GetFieldsFromTb($result);
+		return self::GetJsonStrWithPrimaryKeyFormTb($fieldArr, $result, $primaryKey);
 	}
 
 	//执行增删改 [ , ]
