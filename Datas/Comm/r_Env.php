@@ -92,17 +92,17 @@ function GetSelectSqlByParam($DBID, $FormID){
 
 function GetPageParam(){
 	$DBID = Config::Instance()->DB_Config;
-	$FormID = ToolMethod::Instance()->GetPageId();
+	$PageId = ToolMethod::Instance()->GetPageId();
 
-	$Base = GetPageBase($DBID, $FormID, "json");
+	$Base = GetPageBase($DBID, $PageId, "json");
 	$Base = ltrim($Base, "[");
 	$Base = rtrim($Base, "]");
-	echo '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $FormID, "json").',"Form":'.GetPageForm($DBID, $FormID, "json").',"Grid":'.GetPageGrid($DBID, $FormID, "json").'}';
+	echo '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").',"Grid":'.GetPageGrid($DBID, $PageId, "json").'}';
 }
 function GetData(){
 	$DBID = Config::Instance()->DB_Config;
-	$FormID = ToolMethod::Instance()->GetPageId();
-	$sql = GetSelectSqlByParam($DBID, $FormID);
+	$PageId = ToolMethod::Instance()->GetPageId();
+	$sql = GetSelectSqlByParam($DBID, $PageId);
 
 	$rows = ToolMethod::Instance()->GetEasyUiDataGridRows();
 	$page = ToolMethod::Instance()->GetEasyUiDataGridPage();

@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-02-27 23:11:38
+# Date: 2016-03-02 22:01:57
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -59,6 +59,7 @@ CREATE TABLE `g_page` (
   `ModuleId` varchar(20) NOT NULL DEFAULT '' COMMENT '所属模块Id',
   `Controller` varchar(255) NOT NULL DEFAULT '' COMMENT '控制器',
   `OuterLink` varchar(255) DEFAULT '' COMMENT '外链接',
+  `PageType` varchar(255) DEFAULT NULL COMMENT '页面类型',
   `IsActive` int(11) NOT NULL DEFAULT '1' COMMENT '是否激活',
   PRIMARY KEY (`PageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面';
@@ -67,7 +68,7 @@ CREATE TABLE `g_page` (
 # Data for table "g_page"
 #
 
-INSERT INTO `g_page` VALUES ('100000','模块查询、删除','System','ModuleMG','',1),('100001','模块增加、修改','System','ModuleMG','',1),('100002','菜单查询、删除、增加、修改','System','PageMG','',1),('100003','页面查询、删除','System','PageMG','',1),('100004','页面增加、修改','System','PageMG','',1),('100005','按钮查询、删除','System','PageMG','',1),('100006','按钮增加、修改','System','PageMG','',1),('100007','页面按钮增加、删除','System','PageMG','',1),('100008','页面参数增加、修改','System','PageMG','',1);
+INSERT INTO `g_page` VALUES ('100000','模块查询、删除','System','ModuleMG','','r',1),('100001','模块增加、修改','System','ModuleMG','','r',1),('100002','菜单查询、删除、增加、修改','System','PageMG','','r',1),('100003','页面查询、删除','System','PageMG','','r',1),('100004','页面增加、修改','System','PageMG','','r',1),('100005','按钮查询、删除','System','PageMG','','r',1),('100006','按钮增加、修改','System','PageMG','','r',1),('100007','页面按钮增加、删除','System','PageMG','','r',1),('100008','页面参数增加、修改','System','PageMG','','r',1);
 
 #
 # Structure for table "r_page_base"
