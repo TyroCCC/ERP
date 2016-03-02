@@ -16,11 +16,11 @@
 		<script>
 			(function(){
 				$(function(){
-					$.getJSON("../../../Data.php/Comm/g_Env/GetPageParam", function(data){
+					$.getJSON("../../../Data.php/Comm/g_Env/GetPageParam?PageId=100000", function(data){
 						//得到页面类型信息
 						
 						//查询模版的配置信息
-						$.getJSON("../../../Data.php/Comm/r_Env/GetPageParam", function(data){
+						$.getJSON("../../../Data.php/Comm/r_Env/GetPageParam?PageId=100000", function(data){
 						
 						});
 					});
@@ -28,7 +28,7 @@
 				});
 
 				$(".btnTest").on("click", function(){
-					$.getJSON("../../../Data.php/Comm/r_Env/GetData" + window.location.search, function(data){
+					$.getJSON("../../../Data.php/Comm/r_Env/GetData?PageId=100000" + window.location.search, function(data){
 					});
 				});
 			})();

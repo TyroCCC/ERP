@@ -47,7 +47,8 @@ function GetTreeMenuByModuleId(){
 
 // 获取当前页面的信息
 function GetPageParam(){
-	$PageId = ToolMethod::Instance()->GetPageId();
+	// $PageId = ToolMethod::Instance()->GetPageId();
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 	$sql = "select * from g_page where IsActive=1 and PageId='".$PageId."'";
 	echo DB::Instance()->UnPageJson(Config::Instance()->DB_Config, $sql);
 }

@@ -92,7 +92,8 @@ function GetSelectSqlByParam($DBID, $FormID){
 
 function GetPageParam(){
 	$DBID = Config::Instance()->DB_Config;
-	$PageId = ToolMethod::Instance()->GetPageId();
+	// $PageId = ToolMethod::Instance()->GetPageId();
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 
 	$Base = GetPageBase($DBID, $PageId, "json");
 	$Base = ltrim($Base, "[");
@@ -101,7 +102,8 @@ function GetPageParam(){
 }
 function GetData(){
 	$DBID = Config::Instance()->DB_Config;
-	$PageId = ToolMethod::Instance()->GetPageId();
+	// $PageId = ToolMethod::Instance()->GetPageId();
+	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 	$sql = GetSelectSqlByParam($DBID, $PageId);
 
 	$rows = ToolMethod::Instance()->GetEasyUiDataGridRows();
