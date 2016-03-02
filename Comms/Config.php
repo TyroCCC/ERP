@@ -19,14 +19,14 @@ class Config{
 		"host" => "localhost",
 		"port" => "",
 		"user" => "root",
-		"password" => "luohang",
+		"password" => "123456",
 		"database" => "config"
 	);
 	public $DB_Erp = array(
 		"host" => "localhost",
 		"port" => "",
 		"user" => "root",
-		"password" => "luohang",
+		"password" => "123456",
 		"database" => "erp"
 	);
 
