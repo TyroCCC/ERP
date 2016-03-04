@@ -14,6 +14,9 @@ $arr = explode("/", $url);
 
 if(count($arr) == 3){
 	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
+	if($PageId == ""){
+		$PageId = ToolMethod::Instance()->GetPostParam("PageId");
+	}
 
 	if($PageId == ""){
 		echo "404 Not Found";
