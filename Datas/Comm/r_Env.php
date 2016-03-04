@@ -7,7 +7,7 @@
 
 
 function GetPageBase($DBID, $FormID, $type){
-	$sql = "select * from r_page_base where PageId='".$FormID."'";
+	$sql = "select tb1.*,tb2.PageType from r_page_base as tb1 inner join g_page as tb2 on tb1.PageId=tb2.PageId where tb1.PageId='".$FormID."'";
 	if($type == "json"){
 		return DB::Instance()->GetJson($DBID, $sql);
 	}
