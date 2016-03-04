@@ -90,7 +90,7 @@ function GetSelectSqlByParam($DBID, $FormID){
 
 
 
-function GetPageParam(){
+function Config(){
 	$DBID = Config::Instance()->DB_Config;
 	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 	if($PageId == ""){
@@ -100,15 +100,15 @@ function GetPageParam(){
 	$Base = GetPageBase($DBID, $PageId, "json");
 	$Base = ltrim($Base, "[");
 	$Base = rtrim($Base, "]");
-	echo '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").',"Grid":'.GetPageGrid($DBID, $PageId, "json").'}';
+	return '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").',"Grid":'.GetPageGrid($DBID, $PageId, "json").'}';
 }
-function GetData(){
+function Data(){
 	$DBID = Config::Instance()->DB_Config;
 	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
 	if($PageId == ""){
 		$PageId = ToolMethod::Instance()->GetPostParam("PageId");
 	}
-	
+
 	$sql = GetSelectSqlByParam($DBID, $PageId);
 
 	$rows = ToolMethod::Instance()->GetEasyUiDataGridRows();
@@ -116,7 +116,23 @@ function GetData(){
 
 	$PagingSql = ToolMethod::Instance()->GetPagingSql($sql, $rows, $page);
 	$CountSql = ToolMethod::Instance()->GetCountSql($sql);
-	echo DB::Instance()->PageJson($DBID, $PagingSql, $CountSql);
+	return DB::Instance()->PageJson($DBID, $PagingSql, $CountSql);
+}
+
+
+
+
+
+function GetConfig(){
+	echo Config();
+}
+
+function GetData(){
+	echo Data();
+}
+
+function GetConfigAndData(){
+	echo '{"Config":'.Config().',"Data":'.Data()."}";
 }
 
 ?>
