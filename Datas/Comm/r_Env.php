@@ -93,11 +93,16 @@ function GetSelectSqlByParam($DBID, $FormID){
 		$ValType = $value["ValType"];
 		
 		if($FormId != ""){
-			if($ValType == "int"){
-				$whereStr .= " and ".$DBField." ".$ComparisonSign." ".$FormId;
+			if($ComparisonSign == "like"){
+				$whereStr .= " and ".$DBField." ".$ComparisonSign." '%".$FormId."%'";
 			}
-			else if($ValType == "string"){
-				$whereStr .= " and ".$DBField." ".$ComparisonSign." '".$FormId."'";
+			else{
+				if($ValType == "int"){
+					$whereStr .= " and ".$DBField." ".$ComparisonSign." ".$FormId;
+				}
+				else if($ValType == "string"){
+					$whereStr .= " and ".$DBField." ".$ComparisonSign." '".$FormId."'";
+				}				
 			}
 		}
 	}
