@@ -1,0 +1,190 @@
+{
+    "MenuId": "100000",
+    "MenuName": "系统管理",
+    "NodeLevel": "0",
+    "ParentMenuId": "0",
+    "PageId": "0",
+    "ModuleId": "",
+    "Controller": "",
+    "Action": "",
+    "OuterLink": "",
+    "Children": [
+        {
+            "MenuId": "100001",
+            "MenuName": "功能1",
+            "NodeLevel": "1",
+            "ParentMenuId": "100000",
+            "PageId": "0",
+            "ModuleId": "",
+            "Controller": "",
+            "Action": "",
+            "OuterLink": "",
+            "Children": [
+                {
+                    "MenuId": "100003",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100001",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100004",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100001",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100005",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100001",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                }
+            ]
+        },
+        {
+            "MenuId": "100002",
+            "MenuName": "功能2",
+            "NodeLevel": "1",
+            "ParentMenuId": "100000",
+            "PageId": "0",
+            "ModuleId": "",
+            "Controller": "",
+            "Action": "",
+            "OuterLink": "",
+            "Children": [
+                {
+                    "MenuId": "100006",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100002",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100007",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100002",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100008",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100002",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100009",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100002",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                },
+                {
+                    "MenuId": "100010",
+                    "MenuName": "页面1",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100002",
+                    "PageId": "100000",
+                    "ModuleId": "System",
+                    "Controller": "test",
+                    "Action": "test",
+                    "OuterLink": ""
+                }
+            ]
+        },
+        {
+            "MenuId": "100011",
+            "MenuName": "功能3",
+            "NodeLevel": "1",
+            "ParentMenuId": "100000",
+            "PageId": "0",
+            "ModuleId": "",
+            "Controller": "",
+            "Action": "",
+            "OuterLink": "",
+            "Children": [
+                {
+                    "MenuId": "100012",
+                    "MenuName": "功能33",
+                    "NodeLevel": "2",
+                    "ParentMenuId": "100011",
+                    "PageId": "0",
+                    "ModuleId": "",
+                    "Controller": "",
+                    "Action": "",
+                    "OuterLink": "",
+                    "Children": [
+                        {
+                            "MenuId": "100013",
+                            "MenuName": "功能333",
+                            "NodeLevel": "3",
+                            "ParentMenuId": "100012",
+                            "PageId": "0",
+                            "ModuleId": "",
+                            "Controller": "",
+                            "Action": "",
+                            "OuterLink": "",
+                            "Children": [
+                                {
+                                    "MenuId": "100014",
+                                    "MenuName": "功能3333",
+                                    "NodeLevel": "4",
+                                    "ParentMenuId": "100013",
+                                    "PageId": "0",
+                                    "ModuleId": "",
+                                    "Controller": "",
+                                    "Action": "",
+                                    "OuterLink": "",
+                                    "Children": [
+                                        {
+                                            "MenuId": "100015",
+                                            "MenuName": "功能33333",
+                                            "NodeLevel": "5",
+                                            "ParentMenuId": "100014",
+                                            "PageId": "0",
+                                            "ModuleId": "",
+                                            "Controller": "",
+                                            "Action": "",
+                                            "OuterLink": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
