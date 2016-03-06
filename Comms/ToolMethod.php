@@ -153,7 +153,7 @@ class ToolMethod{
 			$str2 = "";
 			$str2 .= '"'.$v1[$key].'":{';
 			foreach ($v1 as $k2 => $v2) {
-				$str2 .= '"'.$k2.'":'.($v2 ? json_encode($v2) : '""').',';
+				$str2 .= '"'.$k2.'":'.($v2 != null ? json_encode($v2) : '""').',';
 			}
 			$str2 = rtrim($str2, ",");
 			$str2 .= "},";
