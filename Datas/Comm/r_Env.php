@@ -17,6 +17,7 @@ function GetPageBase($DBID, $FormID, $type){
 }
 function GetPageBtn($DBID, $FormID, $type){
 	$sql = "select * from r_page_btn where PageId='".$FormID."' and IsActive=1";
+	
 	if($type == "json"){
 		return DB::Instance()->GetJsonWithPrimaryKey($DBID, $sql, "Id");
 	}
@@ -25,12 +26,33 @@ function GetPageBtn($DBID, $FormID, $type){
 	}
 }
 function GetPageForm($DBID, $FormID, $type){
-	$sql = "select * from r_page_form where PageId='".$FormID."' and IsActive=1";
+	$sql = "select FormId as tmp_FormId,PostType as tmp_PostType,
+		PageId,Id,FormId,FormName,FormType,Width,Height,BackgroundColor,DefaultVal,ValType,ComparisonSign,DBField,PostType,IsRequired,IsActive
+	 	from r_page_form where PageId='".$FormID."' and IsActive=1";
+
+	$tmp = DB::Instance()->Get2Arr($DBID, $sql);
+	for($i=0; $i<count($tmp); $i++){
+		$FormId = $tmp[$i][0]["value"];//表单
+		$PostType = $tmp[$i][1]["value"];
+
+		if($PostType == "get"){
+			$v = ToolMethod::Instance()->GetUrlParam($FormId);//值
+		}
+		else if($PostType == "post"){
+			$v = ToolMethod::Instance()->GetPostParam($FormId);
+		}
+
+		$tmp[$i][count($tmp[$i])] = array(
+			"name" => "PreValue",
+			"value" => $v
+		);
+	}
 	if($type == "json"){
-		return DB::Instance()->GetJsonWithPrimaryKey($DBID, $sql, "Id");
+		$tmp = ToolMethod::Instance()->TranMy2Arr($tmp);
+		return ToolMethod::Instance()->TwoArr2JsonWithPrimaryKey($tmp, "Id");
 	}
 	else{
-		return DB::Instance()->Get2Arr($DBID, $sql);
+		return $tmp;
 	}
 }
 function GetPageGrid($DBID, $FormID, $type){

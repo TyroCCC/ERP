@@ -160,7 +160,7 @@ class DB{
 			if($type == "get"){
 				$v = ToolMethod::Instance()->GetUrlParam($k);//值
 			}
-			else if(type == "post"){
+			else if($type == "post"){
 				$v = ToolMethod::Instance()->GetPostParam($k);
 			}
 			if($v != ""){
