@@ -1,0 +1,124 @@
+.maincontent {
+	margin: 2px;
+	border: 2px solid #999999;
+}
+
+.maincontent .navtab {
+	width: 100%;
+	height: 100%;
+}
+
+.maincontent .navtab .tabhead {
+	height: 30px;
+	background: #ABABD2;
+}
+
+.maincontent .navtab .tabhead .tablist {
+	margin: 0px;
+	padding: 0px;
+    height: 26px;
+	padding-top: 2px;
+    border-bottom: 2px solid #999999;
+}
+
+.maincontent .navtab .tablist li {
+	position: relative;
+	float: left;
+	width: 100px;
+    height: 24px;
+	margin: 0 3px;
+	padding: 0 18px;
+	text-align: center;
+    border: 2px solid #999999;
+    border-bottom: none;
+    font-size: 14px;
+    line-height: 24px;
+	list-style: none;
+	color: #4A4A4A;
+	border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.maincontent .navtab .tablist li.show {
+	font-weight: bold;
+	border-bottom: 2px solid white;
+	background: white;
+}
+
+.maincontent .navtab .tabcontent {
+	padding: 2px;
+}
+
+.maincontent .navtab .tabcontent .tabitemcontent {
+	padding-top: 8px;
+}
+
+.search {
+	position: relative;
+	margin: 3px;
+    margin-top: 0px;
+    padding: 4px;
+    padding-right: 84px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+}
+
+.search .searchitem {
+	display: inline-block;
+	margin: 4px;
+}
+
+.search .searchitem span {
+	margin-right: 5px;
+}
+
+.search .searchbutton {
+	position: absolute;
+    right: 4px;
+    top: 4px;
+    margin: 1px 4px;
+}
+
+.search .searchbutton button {
+	width: 72px;
+	height: 26px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: #39398A;
+    color: #F7F7F7;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.operation {
+	position: relative;
+	margin: 3px;
+    margin-top: 8px;
+    padding: 4px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+}
+
+.operation .operationbutton {
+	display: inline-block;
+	margin: 4px;
+}
+
+.operation .operationbutton button {
+	width: 72px;
+	height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: #39398A;
+    color: #F7F7F7;
+    border-radius: 4px;
+    font-weight: bold;
+}

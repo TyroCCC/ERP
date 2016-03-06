@@ -1,0 +1,105 @@
+.navtab {
+	width: 100%;
+	height: 100%;
+}
+
+.navtab .tabhead {
+	height: 30px;
+    /*padding-top: 2px;*/
+	background: #ABABD2;
+	/*border-bottom: 2px solid #999999;*/
+}
+
+.navtab .tabhead .moveleft {
+	float: left;
+	width: 18px;
+	height: 30px;
+	/*color: #4A4A4A;*/
+	color: white;
+	cursor: pointer;
+	border-right: 1px solid white;
+	display: none;
+}
+
+.navtab .tabhead .moveleft .iconmove {
+	margin-left: 4px;
+	line-height: 30px;
+}
+
+.navtab .tabhead .moveright {
+	float: left;
+	width: 18px;
+	height: 30px;
+	/*color: #4A4A4A;*/
+	color: white;
+	border-left: 1px solid white;
+	cursor: pointer;
+	display: none;
+}
+
+.navtab .tabhead .moveright .iconmove {
+	margin-left: 4px;
+	line-height: 30px;
+}
+
+.navtab .tabhead .tabheadcontent {
+	float: left;
+	position: relative;
+	overflow: hidden;
+}
+
+.navtab .tabhead .tabheadcontent .tabheadlist {
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+    height: 30px;
+    left : 0px;
+    width: 0px;
+}
+
+.navtab .tabhead .tabheadcontent .tabheadlist .tabheaditem {
+	position: relative;
+	float: left;
+	width: 100px;
+    height: 30px;
+	/*margin: 0 3px;*/
+	padding: 0 16px;
+	text-align: center;
+    /*border: 2px solid #999999;*/
+    border-bottom: none;
+    font-size: 14px;
+    line-height: 30px;
+	list-style: none;
+	/*color: #4A4A4A;*/
+	color: white;
+	/*border-top-left-radius: 4px;
+    border-top-right-radius: 4px;*/
+    border-right: 1px solid white;
+	cursor: pointer;
+}
+
+.navtab .tabhead .tabheadcontent .tabheadlist .tabheaditem:first-child {
+	border-left: 1px solid white;
+}
+
+.navtab .tabhead .tabheadcontent .tabheadlist .tabheaditem.active {
+	/*font-weight: bold;*/
+	/*border-bottom: 2px solid white;*/
+	background: white;
+	cursor: default;
+	color: #4A4A4A;
+}
+
+.navtab .tabhead .tabheadcontent .tabheadlist .tabheaditem .iconclose {
+	position: absolute;
+	top: 2px;
+	right: 4px;
+}
+
+.navtab .tabcontent {
+	padding: 2px;
+}
+
+.navtab .tabcontent .tabitemcontent {
+	padding-top: 8px;
+}

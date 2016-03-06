@@ -1,0 +1,96 @@
+.search {
+	position: relative;
+	margin: 3px;
+    margin-top: 0px;
+    padding: 4px;
+    padding-right: 84px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+}
+
+.search .searchitem {
+	display: inline-block;
+	margin: 4px;
+}
+
+.search .searchitem span {
+	margin-right: 5px;
+}
+
+.search .searchbutton {
+	position: absolute;
+    right: 4px;
+    top: 4px;
+    margin: 1px 4px;
+}
+
+.search .searchbutton button {
+	width: 72px;
+	height: 26px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: #39398A;
+    color: #F7F7F7;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.operation {
+	position: relative;
+	margin: 3px;
+    margin-top: 8px;
+    padding: 4px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+}
+
+.operation .operationbutton {
+	display: inline-block;
+	margin: 4px;
+}
+
+.operation .operationbutton button {
+	width: 72px;
+	height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: #39398A;
+    color: #F7F7F7;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.table {
+    position: relative;
+    margin: 3px;
+    margin-top: 8px;
+    padding: 4px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+    overflow: auto;
+}
+
+.table table {
+    width: 100%;
+    color: #424141;
+}
+
+.table table th {
+    border-bottom: 1px solid #999999;
+    background: #E0E0E0;
+}
+
+.table table td {
+    border-bottom: 1px solid #999999;
+    text-align: center;
+}
