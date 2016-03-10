@@ -1,8 +1,90 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-03-02 22:01:57
+# Date: 2016-03-10 22:29:59
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
+
+#
+# Structure for table "c_page_base"
+#
+
+DROP TABLE IF EXISTS `c_page_base`;
+CREATE TABLE `c_page_base` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `DataSource` varchar(1000) DEFAULT NULL COMMENT '数据源sql,一般为单表',
+  `BtnIdLst` varchar(1000) DEFAULT NULL COMMENT '按钮ID列表',
+  `FormIdLst` varchar(1000) DEFAULT NULL COMMENT '表单ID列表',
+  PRIMARY KEY (`PageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面基本配置';
+
+#
+# Data for table "c_page_base"
+#
+
+INSERT INTO `c_page_base` VALUES ('100000','200px','500px','#fff','g_module','0,1,2','0,1,2,3');
+
+#
+# Structure for table "c_page_btn"
+#
+
+DROP TABLE IF EXISTS `c_page_btn`;
+CREATE TABLE `c_page_btn` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '按钮标记',
+  `BtnId` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮Id',
+  `BtnName` varchar(255) DEFAULT NULL COMMENT '按钮名',
+  `IconCls` varchar(255) DEFAULT NULL COMMENT '按钮图标类名',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
+  `Action` varchar(255) DEFAULT NULL COMMENT '方法',
+  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  PRIMARY KEY (`PageId`,`Id`,`BtnId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
+
+#
+# Data for table "c_page_btn"
+#
+
+INSERT INTO `c_page_btn` VALUES ('100000',0,'Btn-Close','关闭','icon-close','100px','30px','#fff','',NULL,'1'),('100000',1,'Btn-Reload','刷新','icon-reload','100px','30px','#fff','',NULL,'1'),('100000',2,'Btn-Enter','确定','icon-ok','100px','30px','#fff','',NULL,'1');
+
+#
+# Structure for table "c_page_form"
+#
+
+DROP TABLE IF EXISTS `c_page_form`;
+CREATE TABLE `c_page_form` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '表单标记',
+  `FormId` varchar(255) NOT NULL DEFAULT '' COMMENT '表单ID',
+  `FormName` varchar(255) DEFAULT NULL COMMENT '表单标题',
+  `FormType` varchar(255) DEFAULT NULL COMMENT '表单类型 text/date/radio/checkbox/select/三点弹框',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `DefaultVal` varchar(255) DEFAULT NULL COMMENT '默认值',
+  `ValType` varchar(255) DEFAULT NULL COMMENT '值类型',
+  `DBField` varchar(255) DEFAULT NULL COMMENT '数据库比较的相对字段',
+  `PostType` varchar(255) DEFAULT 'get' COMMENT '提交方式 Get/Post',
+  `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
+  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `Reg` varchar(255) DEFAULT NULL COMMENT '验证规则 正则表达式',
+  `ValLst` varchar(255) DEFAULT NULL COMMENT '值列表,例如下拉框的数据',
+  `ValUrl` varchar(255) DEFAULT NULL COMMENT '远程取数的url地址',
+  `WinUrl` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面url',
+  `WinFields` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面返回的选择字段',
+  PRIMARY KEY (`PageId`,`Id`,`FormId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
+
+#
+# Data for table "c_page_form"
+#
+
+INSERT INTO `c_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','ModuleName','get',1,'1','',NULL,NULL,NULL,NULL),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','ModuleId','get',1,'1','',NULL,NULL,NULL,NULL),('100000',2,'IsActive','是否激活','radio','100px','30px','#fff','1','int','IsActive','get',1,'1','\\d',NULL,NULL,NULL,NULL),('100000',3,'Seq','排序','text','100px','100px','#fff',NULL,'int','Seq','get',1,'1','\\d',NULL,NULL,NULL,NULL);
 
 #
 # Structure for table "g_menu"
@@ -46,7 +128,7 @@ CREATE TABLE `g_module` (
 # Data for table "g_module"
 #
 
-INSERT INTO `g_module` VALUES ('1111','ModuleName',1,10),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
+INSERT INTO `g_module` VALUES ('1111','ModuleName',1,10),('3','1',1,4),('33','11',1,44),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
 
 #
 # Structure for table "g_page"
@@ -149,7 +231,7 @@ CREATE TABLE `r_page_form` (
 # Data for table "r_page_form"
 #
 
-INSERT INTO `r_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','like','ModuleName','get',0,'1'),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','=','ModuleId','get',0,'1'),('100000',2,'IsActive','是否激活','text','100px','30px','#fff',NULL,'string','=','IsActive','get',0,'1');
+INSERT INTO `r_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','like','ModuleName','post',0,'1'),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','=','ModuleId','post',0,'1'),('100000',2,'IsActive','是否激活','text','100px','30px','#fff',NULL,'string','=','IsActive','post',0,'1');
 
 #
 # Structure for table "r_page_grid"
