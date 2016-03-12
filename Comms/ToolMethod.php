@@ -27,7 +27,13 @@ class ToolMethod{
 	//统一的 带状态的 json
 	function JsonWithStatus($fn){
 		try{
-			return '{"result":"OK",'.ltrim($fn(), "{");
+			$tmp = ltrim($fn(), "{");
+			if($tmp == "}"){
+				return '{"result":"OK"'.$tmp;
+			}
+			else{
+				return '{"result":"OK",'.$tmp;
+			}
 		}
 		catch(Exception $err){
 			return self::GetErrJsonStr($err->getMessage());
