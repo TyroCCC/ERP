@@ -25,36 +25,16 @@
 	<script type="text/javascript" src="../Views/js/dialog-1.0.0.js"></script>
 	<script type="text/javascript" src="../Views/js/module-1.0.0.js"></script>
     <script type="text/javascript" src="../Views/js/pagecontroller-1.0.0.js"></script>
+    <script type="text/javascript" src="../Views/js/operationcontroller-1.0.0.js"></script>
 	
 	<script type="text/javascript">
 		window.onload = function() {
+            operationcontroller.showLoading();
 			dragBar.init($(document));
 			menu.init();
 			navtab.init();
 			utils.resize();
-			//dialog.open();
-			
-			/*for(var i = 0; i < 10; i++) {
-				navtab.open("功能" + i);
-			}*/
-			/*navtab.open("新页面");
-			$.ajax({
-            url: "data/tab.json",
-            //type: "POST",
-            type: "GET",
-            cache: false,
-            dataType: "json",
-            async: false,
-            success: function (json) {
-            	var module = "";
-            	module += searchmodule.init(json.Params);
-            	module += buttonmodule.init(json.Btns);
-            	navtab.getTabContent().html(module);
-            },
-            error: function () {
-            	alert("获取菜单数据失败！");
-            }
-        });*/
+            operationcontroller.hideLoading();
 		};
 		
 		$(window).resize(function () {
@@ -70,14 +50,12 @@
     	<div class="verticaldragbar" UI_VerticalDragBar="previous"></div>
     	<div id="centerpage" class="centerpage" UI_ReSize="height" >
         	<div id="leftpage" class="leftpage" >
-        		<!-- <jsp:include page="menu.jsp"></jsp:include> -->
         		<div class="mainmenu" id="mainmenu">
 					<ul class="menu"></ul>
 				</div>
         	</div>
         	<div class="horizontaldargbar" UI_HorizontalDragBar="previous"></div>
         	<div id="rightpage" class="rightpage" UI_ReSize="width">
-        		<!-- <jsp:include page="content.jsp"></jsp:include> -->
         		<div class="maincontent" UI_ReSize="width">
         			<div class="navtab" id="navtab"></div>
         		</div>
@@ -87,5 +65,10 @@
     	<div id="bottompage" class="bottompage"></div>
     </div>
     <div id="popupage" class="popuppage"></div>
+    <div id="loadpage" class="loadpage">
+        <div class="content">
+            <img src="../Views/images/load.gif" class="loadimg"/>
+        </div>
+    </div>
   </body>
 </html>

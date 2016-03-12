@@ -79,11 +79,13 @@ var navtab = (function($) {
 		
 		$(".iconclose", $tabHeadItem).click(function() {
 			
-			if($tabHeadItem.prev(".tabheaditem").length > 0) {
-				$tabHeadItem.prev(".tabheaditem").click();
-			}
-			else {
-				$tabHeadItem.next(".tabheaditem").click();
+			if($tabHeadItem.hasClass("active")) {
+				if($tabHeadItem.prev(".tabheaditem").length > 0) {
+					$tabHeadItem.prev(".tabheaditem").click();
+				}
+				else {
+					$tabHeadItem.next(".tabheaditem").click();
+				}
 			}
 			
 			var width = $tabHeadItem.outerWidth(true);
@@ -171,23 +173,12 @@ var navtab = (function($) {
 		if($form.length == 0) {
 			return false;
 		}
-		$.ajax({
-            url: "../Data.php/Comm/r_Env/GetConfigAndData",
-            data: $form.serialize(),
-            type: "POST",
-            cache: false,
-            dataType: "json",
-            async: false,
-            success: function (data) {
-            	var $page = pagecontroller.createPage(data);
-            	$tabContent.html("");
-            	$page.appendTo($tabContent);
-            	utils.resize($tabContent);
-            },
-            error: function () {
-            	alert("获取数据失败！");
-            }
-        });
+
+		var option = {};
+		option.operation = "reloadnavtab";
+		option.url = "../Data.php/Comm/r_Env/GetConfigAndData";
+		option.data = $form.serialize();
+		operationcontroller.execute(option);
 	}
 	
 	return {
