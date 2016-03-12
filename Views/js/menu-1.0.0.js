@@ -77,26 +77,12 @@ var menu = (function($) {
 
 		$menuitem.click(function() {
 			var $this = $(this);
-			navtab.open($this.attr("m_title"));
-			$.ajax({
-            	//url: "../View.php?PageId=" + $this.attr("m_pageid"),
-            	url: "../Data.php/Comm/r_Env/GetConfigAndData",
-            	data: {PageId : $this.attr("m_pageid")},
-            	type: "POST",
-            	cache: false,
-            	dataType: "json",
-            	async: false,
-            	success: function (data) {
-            		//navtab.getTabContent().html(data);
-            		var $page = pagecontroller.createPage(data);
-            		navtab.getTabContent().html("");
-            		$page.appendTo(navtab.getTabContent());
-            		utils.resize(navtab.getTabContent());
-            	},
-            	error: function () {
-            		alert("获取菜单数据失败！");
-            	}
-            });
+			var option = {};
+			option.operation = "navtab";
+			option.title = $this.attr("m_title");
+			option.url = "../Data.php/Comm/r_Env/GetConfigAndData";
+			option.data = {PageId : $this.attr("m_pageid")};
+			operationcontroller.execute(option);
 			return false;
 		});
 	}

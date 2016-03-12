@@ -23,6 +23,16 @@ class ToolMethod{
 	function GetSuccessJsonStr(){
 		return '{"result": "OK"}';
 	}
+
+	//统一的 带状态的 json
+	function JsonWithStatus($fn){
+		try{
+			return '{"result":"OK",'.ltrim($fn(), "{");
+		}
+		catch(Exception $err){
+			return self::GetErrJsonStr($err->getMessage());
+		}
+	}
 	
 	//获取分页sql
 	function GetPagingSql($sql, $rows, $page){

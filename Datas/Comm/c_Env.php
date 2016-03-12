@@ -76,16 +76,18 @@ function GetCreateSqlByParam($DBID, $PageId){
 
 
 function GetConfig(){
-	$DBID = Config::Instance()->DB_Config;
-	$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
-	if($PageId == ""){
-		$PageId = ToolMethod::Instance()->GetPostParam("PageId");
-	}
+	echo ToolMethod::Instance()->JsonWithStatus(function(){
+		$DBID = Config::Instance()->DB_Config;
+		$PageId = ToolMethod::Instance()->GetUrlParam("PageId");
+		if($PageId == ""){
+			$PageId = ToolMethod::Instance()->GetPostParam("PageId");
+		}
 
-	$Base = GetPageBase($DBID, $PageId, "json");
-	$Base = ltrim($Base, "[");
-	$Base = rtrim($Base, "]");
-	echo '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").'}';
+		$Base = GetPageBase($DBID, $PageId, "json");
+		$Base = ltrim($Base, "[");
+		$Base = rtrim($Base, "]");
+		return '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").'}';
+	});
 }
 
 function CreateData(){

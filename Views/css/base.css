@@ -56,6 +56,33 @@ body .popuppage {
 	left: 0;
 }
 
+body .loadpage {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: black;
+	opacity: 0.8;
+	display: none;
+}
+
+body .loadpage .content {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body .loadpage .loadimg {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	top: 50%;
+	left: 50%;
+	margin-top: -25px;
+	margin-left: -25px;
+}
+
 /********拖动条样式********/
 .horizontaldargbar {
 	float: left;

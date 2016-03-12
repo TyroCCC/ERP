@@ -151,15 +151,21 @@ function Data(){
 
 
 function GetConfig(){
-	echo Config();
+	echo ToolMethod::Instance()->JsonWithStatus(function(){
+		return Config();
+	});
 }
 
 function GetData(){
-	echo Data();
+	echo ToolMethod::Instance()->JsonWithStatus(function(){
+		return Data();
+	});
 }
 
 function GetConfigAndData(){
-	echo '{"Config":'.Config().',"Data":'.Data()."}";
+	echo ToolMethod::Instance()->JsonWithStatus(function(){
+		return '{"Config":'.Config().',"Data":'.Data()."}";
+	});
 }
 
 ?>
