@@ -6,8 +6,8 @@
 
 
 
-function GetPageBase($DBID, $FormID, $type){
-	$sql = "select tb1.*,tb2.PageType from r_page_base as tb1 inner join g_page as tb2 on tb1.PageId=tb2.PageId where tb1.PageId='".$FormID."'";
+function GetPageBase($DBID, $PageId, $type){
+	$sql = "select * from r_page_base where PageId='".$PageId."'";
 	if($type == "json"){
 		return DB::Instance()->GetJson($DBID, $sql);
 	}
@@ -15,8 +15,8 @@ function GetPageBase($DBID, $FormID, $type){
 		return DB::Instance()->Get2Arr($DBID, $sql);
 	}
 }
-function GetPageBtn($DBID, $FormID, $type){
-	$sql = "select * from r_page_btn where PageId='".$FormID."' and IsActive=1";
+function GetPageBtn($DBID, $PageId, $type){
+	$sql = "select * from r_page_btn where PageId='".$PageId."' and IsActive=1";
 	
 	if($type == "json"){
 		return DB::Instance()->GetJsonWithPrimaryKey($DBID, $sql, "Id");
@@ -25,10 +25,10 @@ function GetPageBtn($DBID, $FormID, $type){
 		return DB::Instance()->Get2Arr($DBID, $sql);
 	}
 }
-function GetPageForm($DBID, $FormID, $type){
+function GetPageForm($DBID, $PageId, $type){
 	$sql = "select FormId as tmp_FormId,PostType as tmp_PostType,
 		PageId,Id,FormId,FormName,FormType,Width,Height,BackgroundColor,DefaultVal,ValType,ComparisonSign,DBField,PostType,IsRequired,IsActive
-	 	from r_page_form where PageId='".$FormID."' and IsActive=1";
+	 	from r_page_form where PageId='".$PageId."' and IsActive=1";
 
 	$tmp = DB::Instance()->Get2Arr($DBID, $sql);
 	for($i=0; $i<count($tmp); $i++){
@@ -55,8 +55,8 @@ function GetPageForm($DBID, $FormID, $type){
 		return $tmp;
 	}
 }
-function GetPageGrid($DBID, $FormID, $type){
-	$sql = "select * from r_page_grid where PageId='".$FormID."' and IsActive=1";
+function GetPageGrid($DBID, $PageId, $type){
+	$sql = "select * from r_page_grid where PageId='".$PageId."' and IsActive=1";
 	if($type == "json"){
 		return DB::Instance()->GetJsonWithPrimaryKey($DBID, $sql, "Id");
 	}
@@ -64,22 +64,22 @@ function GetPageGrid($DBID, $FormID, $type){
 		return DB::Instance()->Get2Arr($DBID, $sql);
 	}
 }
-function GetSelectSqlByParam($DBID, $FormID){
+function GetSelectSqlByParam($DBID, $PageId){
 	$tb = "";
-	$Base = ToolMethod::Instance()->TranMy2Arr(GetPageBase($DBID, $FormID, "arr"));
+	$Base = ToolMethod::Instance()->TranMy2Arr(GetPageBase($DBID, $PageId, "arr"));
 	if(count($Base) == 1){
 		$tb = $Base[0]["DataSource"];
 	}
 	
 	$field = "";
-	$Grid = ToolMethod::Instance()->TranMy2Arr(GetPageGrid($DBID, $FormID, "arr"));
+	$Grid = ToolMethod::Instance()->TranMy2Arr(GetPageGrid($DBID, $PageId, "arr"));
 	foreach ($Grid as $key => $value) {
 		$field .= $value["FieldId"].",";
 	}
 	$field = rtrim($field, ",");
 
 	$whereStr = "";
-	$Form = ToolMethod::Instance()->TranMy2Arr(GetPageForm($DBID, $FormID, "arr"));
+	$Form = ToolMethod::Instance()->TranMy2Arr(GetPageForm($DBID, $PageId, "arr"));
 	foreach ($Form as $key => $value) {
 		if($value["PostType"] == "get"){
 			$FormId = ToolMethod::Instance()->GetUrlParam($value["FormId"]);

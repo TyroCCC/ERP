@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-03-10 22:29:59
+# Date: 2016-03-13 23:17:05
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -17,6 +17,7 @@ CREATE TABLE `c_page_base` (
   `DataSource` varchar(1000) DEFAULT NULL COMMENT '数据源sql,一般为单表',
   `BtnIdLst` varchar(1000) DEFAULT NULL COMMENT '按钮ID列表',
   `FormIdLst` varchar(1000) DEFAULT NULL COMMENT '表单ID列表',
+  `PageType` varchar(255) DEFAULT 'c' COMMENT '页面类型',
   PRIMARY KEY (`PageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面基本配置';
 
@@ -24,7 +25,7 @@ CREATE TABLE `c_page_base` (
 # Data for table "c_page_base"
 #
 
-INSERT INTO `c_page_base` VALUES ('100000','200px','500px','#fff','g_module','0,1,2','0,1,2,3');
+INSERT INTO `c_page_base` VALUES ('100000','200px','500px','#fff','g_module','0,1,2','0,1,2,3','c');
 
 #
 # Structure for table "c_page_btn"
@@ -128,7 +129,7 @@ CREATE TABLE `g_module` (
 # Data for table "g_module"
 #
 
-INSERT INTO `g_module` VALUES ('1111','ModuleName',1,10),('3','1',1,4),('33','11',1,44),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
+INSERT INTO `g_module` VALUES ('','',1,0),('1111','ModuleName',1,10),('111113','1',1,4),('3','1',1,4),('33','11',1,44),('3333','1',1,4),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
 
 #
 # Structure for table "g_page"
@@ -141,7 +142,6 @@ CREATE TABLE `g_page` (
   `ModuleId` varchar(20) NOT NULL DEFAULT '' COMMENT '所属模块Id',
   `Controller` varchar(255) NOT NULL DEFAULT '' COMMENT '控制器',
   `OuterLink` varchar(255) DEFAULT '' COMMENT '外链接',
-  `PageType` varchar(255) DEFAULT NULL COMMENT '页面类型',
   `IsActive` int(11) NOT NULL DEFAULT '1' COMMENT '是否激活',
   PRIMARY KEY (`PageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面';
@@ -150,7 +150,7 @@ CREATE TABLE `g_page` (
 # Data for table "g_page"
 #
 
-INSERT INTO `g_page` VALUES ('100000','模块查询、删除','System','ModuleMG','','r',1),('100001','模块增加、修改','System','ModuleMG','','r',1),('100002','菜单查询、删除、增加、修改','System','PageMG','','r',1),('100003','页面查询、删除','System','PageMG','','r',1),('100004','页面增加、修改','System','PageMG','','r',1),('100005','按钮查询、删除','System','PageMG','','r',1),('100006','按钮增加、修改','System','PageMG','','r',1),('100007','页面按钮增加、删除','System','PageMG','','r',1),('100008','页面参数增加、修改','System','PageMG','','r',1);
+INSERT INTO `g_page` VALUES ('100000','模块查询、删除','System','ModuleMG','',1),('100001','模块增加、修改','System','ModuleMG','',1),('100002','菜单查询、删除、增加、修改','System','PageMG','',1),('100003','页面查询、删除','System','PageMG','',1),('100004','页面增加、修改','System','PageMG','',1),('100005','按钮查询、删除','System','PageMG','',1),('100006','按钮增加、修改','System','PageMG','',1),('100007','页面按钮增加、删除','System','PageMG','',1),('100008','页面参数增加、修改','System','PageMG','',1);
 
 #
 # Structure for table "r_page_base"
@@ -168,6 +168,7 @@ CREATE TABLE `r_page_base` (
   `BtnIdLst` varchar(1000) DEFAULT NULL COMMENT '按钮ID列表',
   `FormIdLst` varchar(1000) DEFAULT NULL COMMENT '表单ID列表',
   `FieldIdLst` varchar(1000) DEFAULT NULL COMMENT '字段Id列表',
+  `PageType` varchar(255) DEFAULT 'r' COMMENT '页面类型',
   PRIMARY KEY (`PageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面基本配置';
 
@@ -175,7 +176,7 @@ CREATE TABLE `r_page_base` (
 # Data for table "r_page_base"
 #
 
-INSERT INTO `r_page_base` VALUES ('100000','100%','100%','#fff','1','10','select * from g_module','0,1,2,3','0,1,2','0,1,2,3');
+INSERT INTO `r_page_base` VALUES ('100000','100%','100%','#fff','1','10','select * from g_module','0,1,2,3','0,1,2','0,1,2,3','r');
 
 #
 # Structure for table "r_page_btn"
