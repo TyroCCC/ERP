@@ -234,6 +234,7 @@ var addPageController = (function($) {
 			option.data = $this.parents("form").serialize();
 			option.callback = function() {
 				dialog.close();
+				navtab.reload();
 			};
 			operationcontroller.execute(option);
 			return false;
