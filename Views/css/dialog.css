@@ -14,6 +14,37 @@
 	background: #A2A2A2;
 }
 
+.dialog .vessel .head .title {
+	float: left;
+	height: 100%;
+	line-height: 28px;
+	padding-left: 5px;
+	color: #3A3A3A;
+	font-size: 15px;
+}
+
+.dialog .vessel .head .operationbar {
+	float: right;
+	position: relative;
+	height: 28px;
+}
+
+.dialog .vessel .head .operationbar .close {
+	float: right;
+	position: relative;
+	width: 28px;
+	height: 28px;
+	background: #E85353;
+	color: white;
+	cursor: pointer;
+}
+
+.dialog .vessel .head .operationbar .close i {
+	position: absolute;
+	margin-top: 5px;
+	margin-left: 8px;
+}
+
 .dialog.active .vessel .head {
 	background: #ABABD2;
 }

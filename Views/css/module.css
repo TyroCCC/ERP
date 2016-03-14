@@ -94,3 +94,60 @@
     border-bottom: 1px solid #999999;
     text-align: center;
 }
+
+.addpage {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.addpage .addPageForm {
+    position: relative;
+    margin: 3px;
+    padding: 4px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+    overflow: auto;
+}
+
+.addpage .addPageForm .formitem {
+    display: inline-block;
+    margin: 4px;
+}
+
+.addpage .addPageForm .formitem span {
+    margin-right: 5px;
+}
+
+.addpage .operation {
+    position: relative;
+    margin: 3px;
+    padding: 2px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #4F4F4F;
+    text-align: right;
+    background: #F6F6F9;
+}
+
+.addpage .operation .operationbutton {
+    display: inline-block;
+    margin: 2px;
+}
+
+.addpage .operation .operationbutton button {
+    width: 72px;
+    height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: #39398A;
+    color: #F7F7F7;
+    border-radius: 4px;
+    font-weight: bold;
+}
