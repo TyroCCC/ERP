@@ -82,7 +82,7 @@ var queryPageController = (function($) {
 		var array = data.Config.Base.FormIdLst.split(",");
 		for(var i = 0; i < array.length; i++) {
 			var searchItem = data.Config.Form[array[i]];
-			page += "<input type='hidden' name='" + searchItem.FormId + "' value=''>";
+			page += "<input type='hidden' name='" + searchItem.FormId + "' value='" + searchItem.PreValue + "'>";
 		}
 
 		page += "</form>";
