@@ -86,7 +86,7 @@ function GetConfig(){
 		$Base = GetPageBase($DBID, $PageId, "json");
 		$Base = ltrim($Base, "[");
 		$Base = rtrim($Base, "]");
-		return '{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").'}';
+		return '{"Config":{"Base":'.$Base.',"Btn":'.GetPageBtn($DBID, $PageId, "json").',"Form":'.GetPageForm($DBID, $PageId, "json").'}}';
 	});
 }
 
