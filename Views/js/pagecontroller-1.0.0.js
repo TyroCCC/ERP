@@ -187,6 +187,21 @@ var addPageController = (function($) {
 			if(item.FormType == "text") {
 				page += "<div class='formitem'><span>" + item.FormName + ":</span><input name='" + item.FormId + "' type='" + item.FormType + "' value='" + (item.PreValue || item.DefaultVal) + "'></div>";
 			}
+			else if(item.FormType == "radio") {
+				page += "<div class='formitem'><span>" + item.FormName + ":</span>";
+				var radioArray = item.ValLst.split(",");
+				for(var j = 0; j < radioArray.length; j++) {
+					var key = radioArray[j].substring(0, radioArray[j].indexOf(":"));
+					var value = radioArray[j].substring(radioArray[j].indexOf(":") + 1);
+					if(key == item.DefaultVal) {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'  checked='checked'/>" + value;
+					}
+					else {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'/>" + value;
+					}
+				}
+				page += "</div>";
+			}
 		}
 		page += "</div>";
 		return page;
