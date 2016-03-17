@@ -27,7 +27,7 @@ var operationcontroller = (function($) {
 			};
 			ajaxData(data);
 		}
-		else if(option.operation = "reloadnavtab") {
+		else if(option.operation == "reloadnavtab") {
 			var data = {};
 			data.url = option.url;
 			data.data = option.data;
@@ -38,6 +38,37 @@ var operationcontroller = (function($) {
             	utils.resize(navtab.getTabContent());
 			};
 			ajaxData(data);
+		}
+		else if(option.operation == "dialog") {
+			var $dialog = dialog.open(option.title || "新窗口");
+			var data = {};
+			data.url = option.url;
+			data.data = option.data;
+			data.callback = function(data) {
+				var $page = pagecontroller.createPage(data);
+				dialog.getDialogContent().html("");
+				$page.appendTo(dialog.getDialogContent());
+				utils.resize(dialog.getDialogContent());
+			};
+			ajaxData(data);
+		}
+		else if(option.operation == "post" || option.operation == "get") {
+			var data = {};
+			data.url = option.url;
+			data.data = option.data;
+			data.callback = function(data) {
+				if(data.result == "failed") {
+					alert(data.reason);
+					return;
+				}
+				option.callback();
+			};
+			ajaxData(data);
+		}
+		else {
+			if(typeof option.callback != "undefined") {
+				option.callback();
+			}
 		}
 
 	}

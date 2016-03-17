@@ -151,11 +151,11 @@ var dialog = (function($) {
 	        }
 	};
 	
-	function create(opation) {
+	function create(title, opation) {
 		
 		opation = $.extend({}, defaultOpation, opation);
 		
-		var $dialog = $("<div class='dialog active'><div class='vessel'><div class='head'></div><div class='content' UI_ReSize='height'></div></div></div>");
+		var $dialog = $("<div class='dialog active'><div class='vessel'><div class='head'><div class='title'></div><div class='operationbar'></div></div><div class='content' UI_ReSize='height'></div></div></div>");
 		$dialog.width(opation.width);
 		$dialog.height(opation.height);
 
@@ -163,6 +163,12 @@ var dialog = (function($) {
 		var left = ($(window).width() - $dialog.outerWidth()) / 2;
 		$dialog.css("top", top + "px");
 		$dialog.css("left", left + "px");
+
+		$(".title", $dialog).html(title);
+
+		if(opation.closeable) {
+			$("<div class='close'><i class='icon-remove'></i></div>").appendTo($(".operationbar", $dialog));
+		}
 		
 		return $dialog;
 		
@@ -225,15 +231,52 @@ var dialog = (function($) {
                  return false;
 			});
 		}
+
+		if(opation.closeable) {
+			$(".head .operationbar .close", $obj).click(function() {
+				$obj.remove();
+				return false;
+			});
+		}
+	}
+
+	function getDialog(id) {
+		if(null == id || typeof id == "undefined") {
+			return $(".dialog.active");
+		}
+	}
+
+	function getDialogContent(id) {
+		var $obj = getDialog(id);
+		return $(".content", $obj);
+	}
+
+	function close(id) {
+		if(null == id || typeof id == "undefined") {
+			$(".dialog.active").remove();
+		}
 	}
 	
 	return {
 		
-		open : function(opation) {
-			var $dialog = create(opation);
+		open : function(title, opation) {
+			var $dialog = create(title, opation);
 			setEvent($dialog, opation);
-			utils.resize($dialog);
 			$dialog.appendTo($("#popupage"));
+			utils.resize($dialog);
+			return $dialog;
+		},
+
+		getDialog : function(id) {
+			return getDialog(id);
+		},
+
+		getDialogContent : function(id) {
+			return getDialogContent();
+		},
+
+		close : function(id) {
+			close(id);
 		}
 		
 	};

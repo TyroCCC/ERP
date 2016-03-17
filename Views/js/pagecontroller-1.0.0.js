@@ -11,6 +11,9 @@ var pagecontroller = (function($) {
 		if(data.Config.Base.PageType == "r") {
 			$page = queryPageController.create(data);
 		}
+		else if(data.Config.Base.PageType == "c") {
+			$page = addPageController.create(data);
+		}
 
 		return $page;
 	}
@@ -55,6 +58,17 @@ var queryPageController = (function($) {
 				$("input[name='" + $this.attr("name") + "']", $page.siblings(".tabform")).val($this.val());
 			});
 			navtab.reload();
+			return false;
+		});
+
+		$(".operationbutton button", $page).click(function() {
+			var $this = $(this);
+			var option = {};
+			option.operation = $this.attr("m_trigger");
+			option.title = $this.attr("m_title");
+			option.url = $this.attr("m_url");
+			operationcontroller.execute(option);
+			return false;
 		});
 
 	}
@@ -102,7 +116,7 @@ var queryPageController = (function($) {
 		page = "<div class='operation'>";
 		for(var i = 0; i < array.length; i++) {
 			var buttonItem = buttonData[array[i]];
-			page += "<div class='operationbutton'><button><i class='" + buttonItem.IconCls + "'></i>" + buttonItem.BtnName +"</button></div>";
+			page += "<div class='operationbutton'><button m_url='" + buttonItem.Action + "' m_trigger='" + buttonItem.TriggerType + "' m_title='" + buttonItem.BtnName + "'><i class='" + buttonItem.IconCls + "'></i>" + buttonItem.BtnName +"</button></div>";
 		}
 		page += "</div>";
 		return page;
@@ -135,6 +149,98 @@ var queryPageController = (function($) {
 		return page;
 	}
 	
+	return {
+		create : function(data) {
+			var $page = create(data);
+			setEvent($page);
+			return $page;
+		}
+	}
+
+})(jQuery);
+
+
+var addPageController = (function($) {
+
+	function create(data) {
+
+		var page = "<form class='addpage'>";
+		if(typeof data.Config.Base.FormIdLst != "undefined" && typeof data.Config.Form != "undefined") {
+			page += createAddFormModule(data.Config.Base.FormIdLst, data.Config.Form);
+		}
+		if(typeof data.Config.Base.BtnIdLst != "undefined" && typeof data.Config.Btn != "undefined") {
+			page += createButtonModule(data.Config.Base.BtnIdLst, data.Config.Btn);
+		}
+		page +="</form>"
+		return $(page);
+	}
+
+	function createAddFormModule(list, data) {
+		var array = list.split(",");
+		var page = "";
+		if(array.length == 0) {
+			return page;
+		}
+		page = "<div class='addPageForm' UI_RESIZE='height'>";
+		for(var i = 0; i < array.length; i++) {
+			var item = data[array[i]];
+			if(item.FormType == "text") {
+				page += "<div class='formitem'><span>" + item.FormName + ":</span><input name='" + item.FormId + "' type='" + item.FormType + "' value='" + (item.PreValue || item.DefaultVal) + "'></div>";
+			}
+			else if(item.FormType == "radio") {
+				page += "<div class='formitem'><span>" + item.FormName + ":</span>";
+				var radioArray = item.ValLst.split(",");
+				for(var j = 0; j < radioArray.length; j++) {
+					var key = radioArray[j].substring(0, radioArray[j].indexOf(":"));
+					var value = radioArray[j].substring(radioArray[j].indexOf(":") + 1);
+					if(key == item.DefaultVal) {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'  checked='checked'/>" + value;
+					}
+					else {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'/>" + value;
+					}
+				}
+				page += "</div>";
+			}
+		}
+		page += "</div>";
+		return page;
+
+	}
+
+	function createButtonModule(list, data) {
+		var array = list.split(",");
+		var page = "";
+		if(array.length == 0) {
+			return page;
+		}
+		page = "<div class='operation'>";
+		for(var i = 0; i < array.length; i++) {
+			var item = data[array[i]];
+			page += "<div class='operationbutton'><button m_url='" + item.Action + "' m_trigger='" + item.TriggerType + "' m_title='" + item.BtnName + "'><i class='" + item.IconCls + "'></i>" + item.BtnName +"</button></div>";
+		}
+		page += "</div>";
+		return page;
+	}
+
+	function setEvent($page) {
+
+		$(".operationbutton button", $page).click(function() {
+			var $this = $(this);
+			var option = {};
+			option.operation = $this.attr("m_trigger");
+			option.title = $this.attr("m_title");
+			option.url = $this.attr("m_url");
+			option.data = $this.parents("form").serialize();
+			option.callback = function() {
+				dialog.close();
+				navtab.reload();
+			};
+			operationcontroller.execute(option);
+			return false;
+		});
+	}
+
 	return {
 		create : function(data) {
 			var $page = create(data);
