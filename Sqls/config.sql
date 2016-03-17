@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-03-13 23:17:05
+# Date: 2016-03-17 23:46:05
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -43,7 +43,8 @@ CREATE TABLE `c_page_btn` (
   `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
   `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
   `Action` varchar(255) DEFAULT NULL COMMENT '方法',
-  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsActive` int(11) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`PageId`,`Id`,`BtnId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
 
@@ -51,7 +52,7 @@ CREATE TABLE `c_page_btn` (
 # Data for table "c_page_btn"
 #
 
-INSERT INTO `c_page_btn` VALUES ('100000',0,'Btn-Close','关闭','icon-close','100px','30px','#fff','',NULL,'1'),('100000',1,'Btn-Reload','刷新','icon-reload','100px','30px','#fff','',NULL,'1'),('100000',2,'Btn-Enter','确定','icon-ok','100px','30px','#fff','',NULL,'1');
+INSERT INTO `c_page_btn` VALUES ('100000',0,'Btn-Close','关闭','icon-close','100px','30px','#fff','',NULL,1,1),('100000',1,'Btn-Reload','刷新','icon-reload','100px','30px','#fff','',NULL,1,1),('100000',2,'Btn-Enter','确定','icon-ok','100px','30px','#fff','post','../Data.php/Comm/c_Env/CreateData?PageId=100000',1,1);
 
 #
 # Structure for table "c_page_form"
@@ -72,12 +73,13 @@ CREATE TABLE `c_page_form` (
   `DBField` varchar(255) DEFAULT NULL COMMENT '数据库比较的相对字段',
   `PostType` varchar(255) DEFAULT 'get' COMMENT '提交方式 Get/Post',
   `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
-  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsActive` int(11) DEFAULT '1' COMMENT '是否激活',
   `Reg` varchar(255) DEFAULT NULL COMMENT '验证规则 正则表达式',
   `ValLst` varchar(255) DEFAULT NULL COMMENT '值列表,例如下拉框的数据',
   `ValUrl` varchar(255) DEFAULT NULL COMMENT '远程取数的url地址',
   `WinUrl` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面url',
   `WinFields` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面返回的选择字段',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`PageId`,`Id`,`FormId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
 
@@ -85,7 +87,57 @@ CREATE TABLE `c_page_form` (
 # Data for table "c_page_form"
 #
 
-INSERT INTO `c_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','ModuleName','get',1,'1','',NULL,NULL,NULL,NULL),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','ModuleId','get',1,'1','',NULL,NULL,NULL,NULL),('100000',2,'IsActive','是否激活','radio','100px','30px','#fff','1','int','IsActive','get',1,'1','\\d',NULL,NULL,NULL,NULL),('100000',3,'Seq','排序','text','100px','100px','#fff',NULL,'int','Seq','get',1,'1','\\d',NULL,NULL,NULL,NULL);
+INSERT INTO `c_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','ModuleName','post',1,1,'',NULL,NULL,NULL,NULL,1),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','ModuleId','post',1,1,'',NULL,NULL,NULL,NULL,1),('100000',2,'IsActive','是否激活','radio','100px','30px','#fff','1','int','IsActive','post',1,1,'\\d','1:是,0:否',NULL,NULL,NULL,1),('100000',3,'Seq','排序','text','100px','100px','#fff',NULL,'int','Seq','post',1,1,'\\d',NULL,NULL,NULL,NULL,1);
+
+#
+# Structure for table "d_page_base"
+#
+
+DROP TABLE IF EXISTS `d_page_base`;
+CREATE TABLE `d_page_base` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `DataSource` varchar(1000) DEFAULT NULL COMMENT '数据源sql,一般为单表',
+  `BtnIdLst` varchar(1000) DEFAULT NULL COMMENT '按钮ID列表',
+  `FormIdLst` varchar(1000) DEFAULT NULL COMMENT '表单ID列表',
+  `PageType` varchar(255) DEFAULT 'u' COMMENT '页面类型',
+  PRIMARY KEY (`PageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面基本配置';
+
+#
+# Data for table "d_page_base"
+#
+
+INSERT INTO `d_page_base` VALUES ('100000','100px','200px','#fff','g_module','0,1','','d');
+
+#
+# Structure for table "d_page_btn"
+#
+
+DROP TABLE IF EXISTS `d_page_btn`;
+CREATE TABLE `d_page_btn` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '按钮标记',
+  `BtnId` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮Id',
+  `BtnName` varchar(255) DEFAULT NULL COMMENT '按钮名',
+  `IconCls` varchar(255) DEFAULT NULL COMMENT '按钮图标类名',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
+  `Action` varchar(255) DEFAULT NULL COMMENT '方法',
+  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
+  PRIMARY KEY (`PageId`,`Id`,`BtnId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
+
+#
+# Data for table "d_page_btn"
+#
+
+INSERT INTO `d_page_btn` VALUES ('100000',0,'Btn-Cancel','取消','icon-cancel','100px','30px','#fff','','','1',1),('100000',1,'Btn-Enter','确定','icon-ok','100px','30px','#fff','','','1',1);
 
 #
 # Structure for table "g_menu"
@@ -129,7 +181,7 @@ CREATE TABLE `g_module` (
 # Data for table "g_module"
 #
 
-INSERT INTO `g_module` VALUES ('','',1,0),('1111','ModuleName',1,10),('111113','1',1,4),('3','1',1,4),('33','11',1,44),('3333','1',1,4),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
+INSERT INTO `g_module` VALUES ('','',1,0),('11111','1',1,23321),('111111','1',1,111111),('2','1',1,3),('2222','1',1,3),('module1','模块1',0,0),('module2','模块2',0,1),('module3','模块3',1,2),('module4','模块4',1,3),('module5','模块5',1,4),('System','系统配置',1,5);
 
 #
 # Structure for table "g_page"
@@ -195,6 +247,7 @@ CREATE TABLE `r_page_btn` (
   `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
   `Action` varchar(255) DEFAULT NULL COMMENT '方法',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`PageId`,`Id`,`BtnId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
 
@@ -202,7 +255,7 @@ CREATE TABLE `r_page_btn` (
 # Data for table "r_page_btn"
 #
 
-INSERT INTO `r_page_btn` VALUES ('100000',0,'Btn-Add','增加','icon-add','100px','30px','#fff','dialog',NULL,'1'),('100000',1,'Btn-Del','删除','icon-del','100px','30px','#fff','get',NULL,'1'),('100000',2,'Btn-Mdf','修改','icon-edit','100px','30px','#fff','dialog',NULL,'1'),('100000',3,'Btn-Search','查询','icon-search','100px','30px','#fff','get',NULL,'1');
+INSERT INTO `r_page_btn` VALUES ('100000',0,'Btn-Add','增加','icon-add','100px','30px','#fff','dialog','../Data.php/Comm/c_Env/GetConfig?PageId=100000','1',1),('100000',1,'Btn-Del','删除','icon-del','100px','30px','#fff','get',NULL,'1',1),('100000',2,'Btn-Mdf','修改','icon-edit','100px','30px','#fff','dialog',NULL,'1',1),('100000',3,'Btn-Search','查询','icon-search','100px','30px','#fff','get',NULL,'1',1);
 
 #
 # Structure for table "r_page_form"
@@ -225,6 +278,7 @@ CREATE TABLE `r_page_form` (
   `PostType` varchar(255) DEFAULT 'get' COMMENT '提交方式 Get/Post',
   `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`PageId`,`Id`,`FormId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
 
@@ -232,7 +286,7 @@ CREATE TABLE `r_page_form` (
 # Data for table "r_page_form"
 #
 
-INSERT INTO `r_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','like','ModuleName','post',0,'1'),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','=','ModuleId','post',0,'1'),('100000',2,'IsActive','是否激活','text','100px','30px','#fff',NULL,'string','=','IsActive','post',0,'1');
+INSERT INTO `r_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','like','ModuleName','post',0,'1',1),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','=','ModuleId','post',0,'1',1),('100000',2,'IsActive','是否激活','text','100px','30px','#fff',NULL,'string','=','IsActive','post',0,'1',1);
 
 #
 # Structure for table "r_page_grid"
@@ -250,6 +304,9 @@ CREATE TABLE `r_page_grid` (
   `IsDefaultSort` varchar(255) DEFAULT NULL COMMENT '是否默认排序',
   `IsJumpParam` varchar(255) DEFAULT NULL COMMENT '是否跳转所用参数',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
+  `IsPK` varchar(255) DEFAULT '0' COMMENT '是否主键(主要用于过滤)',
+  `PostType` varchar(255) DEFAULT NULL COMMENT '用于删除修改页面的实现',
   PRIMARY KEY (`PageId`,`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面网格';
 
@@ -257,4 +314,89 @@ CREATE TABLE `r_page_grid` (
 # Data for table "r_page_grid"
 #
 
-INSERT INTO `r_page_grid` VALUES ('100000','0','ModuleId','模块Id','100px','30px','#fff','1','1','1'),('100000','1','ModuleName','模块名','100px','30px','#fff','0','0','1'),('100000','2','IsActive','是否激活','100px','30px','#fff','0','0','1'),('100000','3','Seq','排序','100px','30px','#fff','0','0','1');
+INSERT INTO `r_page_grid` VALUES ('100000','0','ModuleId','模块Id','100px','30px','#fff','1','1','1',1,'1','get'),('100000','1','ModuleName','模块名','100px','30px','#fff','0','0','1',1,'0',NULL),('100000','2','IsActive','是否激活','100px','30px','#fff','0','0','1',1,'0',NULL),('100000','3','Seq','排序','100px','30px','#fff','0','0','1',1,'0',NULL);
+
+#
+# Structure for table "u_page_base"
+#
+
+DROP TABLE IF EXISTS `u_page_base`;
+CREATE TABLE `u_page_base` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `DataSource` varchar(1000) DEFAULT NULL COMMENT '数据源sql,一般为单表',
+  `BtnIdLst` varchar(1000) DEFAULT NULL COMMENT '按钮ID列表',
+  `FormIdLst` varchar(1000) DEFAULT NULL COMMENT '表单ID列表',
+  `PageType` varchar(255) DEFAULT 'u' COMMENT '页面类型',
+  PRIMARY KEY (`PageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面基本配置';
+
+#
+# Data for table "u_page_base"
+#
+
+INSERT INTO `u_page_base` VALUES ('100000','200px','500px','#fff','g_module','0,1,2','0,1,2,3','u');
+
+#
+# Structure for table "u_page_btn"
+#
+
+DROP TABLE IF EXISTS `u_page_btn`;
+CREATE TABLE `u_page_btn` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '按钮标记',
+  `BtnId` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮Id',
+  `BtnName` varchar(255) DEFAULT NULL COMMENT '按钮名',
+  `IconCls` varchar(255) DEFAULT NULL COMMENT '按钮图标类名',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `TriggerType` varchar(255) DEFAULT NULL COMMENT '触发方式 post/get/dialog/window.open/tab',
+  `Action` varchar(255) DEFAULT NULL COMMENT '方法',
+  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
+  PRIMARY KEY (`PageId`,`Id`,`BtnId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
+
+#
+# Data for table "u_page_btn"
+#
+
+INSERT INTO `u_page_btn` VALUES ('100000',0,'Btn-Close','关闭','icon-close','100px','30px','#fff','','','1',1),('100000',1,'Btn-Reload','刷新','icon-reload','100px','30px','#fff','','','1',1),('100000',2,'Btn-Enter','确定','icon-ok','100px','30px','#fff','','','1',1);
+
+#
+# Structure for table "u_page_form"
+#
+
+DROP TABLE IF EXISTS `u_page_form`;
+CREATE TABLE `u_page_form` (
+  `PageId` varchar(6) NOT NULL DEFAULT '' COMMENT '页面ID',
+  `Id` int(11) NOT NULL DEFAULT '0' COMMENT '表单标记',
+  `FormId` varchar(255) NOT NULL DEFAULT '' COMMENT '表单ID',
+  `FormName` varchar(255) DEFAULT NULL COMMENT '表单标题',
+  `FormType` varchar(255) DEFAULT NULL COMMENT '表单类型 text/date/radio/checkbox/select/三点弹框',
+  `Width` varchar(255) DEFAULT NULL COMMENT '宽度',
+  `Height` varchar(255) DEFAULT NULL COMMENT '高度',
+  `BackgroundColor` varchar(255) DEFAULT NULL COMMENT '背景颜色',
+  `DefaultVal` varchar(255) DEFAULT NULL COMMENT '默认值',
+  `ValType` varchar(255) DEFAULT NULL COMMENT '值类型',
+  `DBField` varchar(255) DEFAULT NULL COMMENT '数据库比较的相对字段',
+  `PostType` varchar(255) DEFAULT 'get' COMMENT '提交方式 Get/Post',
+  `IsRequired` int(11) DEFAULT '0' COMMENT '是否必填',
+  `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
+  `Reg` varchar(255) DEFAULT NULL COMMENT '验证规则 正则表达式',
+  `ValLst` varchar(255) DEFAULT NULL COMMENT '值列表,例如下拉框的数据',
+  `ValUrl` varchar(255) DEFAULT NULL COMMENT '远程取数的url地址',
+  `WinUrl` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面url',
+  `WinFields` varchar(255) DEFAULT NULL COMMENT '三点控件打开的页面返回的选择字段',
+  `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
+  PRIMARY KEY (`PageId`,`Id`,`FormId`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面表单';
+
+#
+# Data for table "u_page_form"
+#
+
+INSERT INTO `u_page_form` VALUES ('100000',0,'ModuleName','模块名','text','100px','30px','#fff',NULL,'string','ModuleName','get',1,'1','',NULL,NULL,NULL,NULL,1),('100000',1,'ModuleId','模块Id','text','100px','30px','#fff',NULL,'string','ModuleId','get',1,'1','',NULL,NULL,NULL,NULL,1),('100000',2,'IsActive','是否激活','radio','100px','30px','#fff','1','int','IsActive','get',1,'1','\\d','1:是,0:否',NULL,NULL,NULL,1),('100000',3,'Seq','排序','text','100px','100px','#fff',NULL,'int','Seq','get',1,'1','\\d',NULL,NULL,NULL,NULL,1);
