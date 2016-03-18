@@ -1,5 +1,5 @@
 # Host: localhost  (Version: 5.5.47)
-# Date: 2016-03-17 23:46:05
+# Date: 2016-03-18 21:56:40
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES gb2312 */;
@@ -248,6 +248,7 @@ CREATE TABLE `r_page_btn` (
   `Action` varchar(255) DEFAULT NULL COMMENT '方法',
   `IsActive` varchar(255) DEFAULT '1' COMMENT '是否激活',
   `IsShow` int(11) DEFAULT '1' COMMENT '是否显示',
+  `IsShowWhenGridSelected` int(11) DEFAULT '0' COMMENT '是否选中行才会显示',
   PRIMARY KEY (`PageId`,`Id`,`BtnId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='页面按钮';
 
@@ -255,7 +256,7 @@ CREATE TABLE `r_page_btn` (
 # Data for table "r_page_btn"
 #
 
-INSERT INTO `r_page_btn` VALUES ('100000',0,'Btn-Add','增加','icon-add','100px','30px','#fff','dialog','../Data.php/Comm/c_Env/GetConfig?PageId=100000','1',1),('100000',1,'Btn-Del','删除','icon-del','100px','30px','#fff','get',NULL,'1',1),('100000',2,'Btn-Mdf','修改','icon-edit','100px','30px','#fff','dialog',NULL,'1',1),('100000',3,'Btn-Search','查询','icon-search','100px','30px','#fff','get',NULL,'1',1);
+INSERT INTO `r_page_btn` VALUES ('100000',0,'Btn-Add','增加','icon-add','100px','30px','#fff','dialog','../Data.php/Comm/c_Env/GetConfig?PageId=100000','1',1,0),('100000',1,'Btn-Del','删除','icon-del','100px','30px','#fff','get',NULL,'1',1,1),('100000',2,'Btn-Mdf','修改','icon-edit','100px','30px','#fff','dialog',NULL,'1',1,1),('100000',3,'Btn-Search','查询','icon-search','100px','30px','#fff','get',NULL,'1',1,0);
 
 #
 # Structure for table "r_page_form"
