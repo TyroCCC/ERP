@@ -112,8 +112,7 @@ function UpdateData(){
 	}
 
 	$sql = GetUpdateSqlByParam($DBID, $PageId);
-	echo $sql;
-	// echo DB::Instance()->Execute($DBID, $sql);
+	echo DB::Instance()->Execute($DBID, $sql);
 }
 
 ?>

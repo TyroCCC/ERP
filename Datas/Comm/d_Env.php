@@ -74,8 +74,7 @@ function DeleteData(){
 	}
 
 	$sql = GetDeleteSqlByParam($DBID, $PageId);
-	echo $sql;
-	// echo DB::Instance()->Execute($DBID, $sql);
+	echo DB::Instance()->Execute($DBID, $sql);
 }
 
 ?>
