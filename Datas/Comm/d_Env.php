@@ -38,10 +38,10 @@ function GetDeleteSqlByParam($DBID, $PageId){
 		$PostType = $value["PostType"];
 		$FieldId = $value["FieldId"];
 		if($PostType == "get"){
-			$v = ToolMethod::Instance()->GetUrlParam("old_".$FieldId);
+			$v = ToolMethod::Instance()->GetUrlParam($FieldId);
 		}
 		else if($PostType == "post"){
-			$v = ToolMethod::Instance()->GetPostParam("old_".$FieldId);
+			$v = ToolMethod::Instance()->GetPostParam($FieldId);
 		}
 		$str1 .= " and ".$FieldId." in (".$v.")";//单条删除、多条删除
 	}
