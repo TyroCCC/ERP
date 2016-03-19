@@ -61,7 +61,12 @@ var operationcontroller = (function($) {
 					alert(data.reason);
 					return;
 				}
-				option.callback();
+				if(typeof option.callback != "undefined") {
+					option.callback();
+				}
+				else {
+					navtab.reload();
+				}
 			};
 			ajaxData(data);
 		}
