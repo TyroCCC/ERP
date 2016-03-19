@@ -14,10 +14,12 @@ var pagecontroller = (function($) {
 		else if(data.Config.Base.PageType == "c") {
 			$page = addPageController.create(data);
 		}
+		else if(data.Config.Base.PageType == "u") {
+			$page = updatePageController.create(data);
+		}
 
 		return $page;
 	}
-	
 	return {
 
 		createPage : function(data) {
@@ -61,7 +63,7 @@ var queryPageController = (function($) {
 			return false;
 		});
 
-		$(".operationbutton button", $page).click(function() {
+		$(".operationbutton.tablebutton button", $page).click(function() {
 			var $this = $(this);
 			var option = {};
 			option.operation = $this.attr("m_trigger");
@@ -69,6 +71,40 @@ var queryPageController = (function($) {
 			option.url = $this.attr("m_url");
 			operationcontroller.execute(option);
 			return false;
+		});
+
+		$(".operationbutton.tableselectbutton button", $page).click(function() {
+			var $this = $(this);
+			var option = {};
+			option.operation = $this.attr("m_trigger");
+			option.title = $this.attr("m_title");
+			option.url = $this.attr("m_url");
+			var data = {};
+			$("table tbody tr.selected td[name]", $page).each(function() {
+				if(typeof $(this).attr("name") != "undefined" && $(this).attr("name") != "") {
+					data[$(this).attr("name")] = $(this).attr("value") || "";
+				}
+			});
+			option.data = data;
+			operationcontroller.execute(option);
+			return false;
+		});
+
+		$("table tbody tr", $page).click(function() {
+			var $this = $(this);
+			$this.siblings("tr").removeClass("selected");
+			$this.addClass("selected");
+			$(".operationbutton.tablebutton", $page).hide();
+			$(".operationbutton.tableselectbutton", $page).show();
+			utils.resize($page);
+			return false;
+		});
+
+		$page.click(function() {
+			$(".operationbutton.tableselectbutton", $page).hide();
+			$(".operationbutton.tablebutton", $page).show();
+			$("table tbody tr", $page).removeClass("selected");
+			utils.resize($page);
 		});
 
 	}
@@ -116,7 +152,13 @@ var queryPageController = (function($) {
 		page = "<div class='operation'>";
 		for(var i = 0; i < array.length; i++) {
 			var buttonItem = buttonData[array[i]];
-			page += "<div class='operationbutton'><button m_url='" + buttonItem.Action + "' m_trigger='" + buttonItem.TriggerType + "' m_title='" + buttonItem.BtnName + "'><i class='" + buttonItem.IconCls + "'></i>" + buttonItem.BtnName +"</button></div>";
+			if(buttonItem.IsShowWhenGridSelected == "1") {
+				page += "<div class='operationbutton tableselectbutton' style='display:none'><button m_url='" + buttonItem.Action + "' m_trigger='" + buttonItem.TriggerType + "' m_title='" + buttonItem.BtnName + "'><i class='" + buttonItem.IconCls + "'></i>" + buttonItem.BtnName +"</button></div>";
+			}
+			else {
+				page += "<div class='operationbutton tablebutton'><button m_url='" + buttonItem.Action + "' m_trigger='" + buttonItem.TriggerType + "' m_title='" + buttonItem.BtnName + "'><i class='" + buttonItem.IconCls + "'></i>" + buttonItem.BtnName +"</button></div>";
+			}
+			
 		}
 		page += "</div>";
 		return page;
@@ -129,23 +171,23 @@ var queryPageController = (function($) {
 		if(headArray.length == 0) {
 			return page;
 		}
-		page = "<div class='table' ui_resize='height'><table cellspacing='0'><tr>";
+		page = "<div class='table' ui_resize='height'><table cellspacing='0'><thead><tr>";
 		for(var i = 0; i < headArray.length; i++) {
 			var tableHeadItem = tableHeadData[headArray[i]];
 			bodyArray.push(tableHeadItem.FieldId);
 			page += "<th>" + tableHeadItem.FieldName +  "</th>";
 		}
-		page += "</tr>";
+		page += "</tr></thead><tbody>";
 
 		$.each(tableBodyData, function(i, item) {
 			page += "<tr>";
 			for(var i = 0; i < bodyArray.length; i++) {
-				page += "<td>" + item[bodyArray[i]] + "</td>";
+				page += "<td name='" + bodyArray[i] + "' value='" + item[bodyArray[i]] + "'>" + item[bodyArray[i]] + "</td>";
 			}
 			page += "</tr>";
 		});
 
-		page += "</table></div>";
+		page += "</tbody></table></div>";
 		return page;
 	}
 	
@@ -198,6 +240,100 @@ var addPageController = (function($) {
 					}
 					else {
 						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'/>" + value;
+					}
+				}
+				page += "</div>";
+			}
+		}
+		page += "</div>";
+		return page;
+
+	}
+
+	function createButtonModule(list, data) {
+		var array = list.split(",");
+		var page = "";
+		if(array.length == 0) {
+			return page;
+		}
+		page = "<div class='operation'>";
+		for(var i = 0; i < array.length; i++) {
+			var item = data[array[i]];
+			page += "<div class='operationbutton'><button m_url='" + item.Action + "' m_trigger='" + item.TriggerType + "' m_title='" + item.BtnName + "'><i class='" + item.IconCls + "'></i>" + item.BtnName +"</button></div>";
+		}
+		page += "</div>";
+		return page;
+	}
+
+	function setEvent($page) {
+
+		$(".operationbutton button", $page).click(function() {
+			var $this = $(this);
+			var option = {};
+			option.operation = $this.attr("m_trigger");
+			option.title = $this.attr("m_title");
+			option.url = $this.attr("m_url");
+			option.data = $this.parents("form").serialize();
+			option.callback = function() {
+				dialog.close();
+				navtab.reload();
+			};
+			operationcontroller.execute(option);
+			return false;
+		});
+	}
+
+	return {
+		create : function(data) {
+			var $page = create(data);
+			setEvent($page);
+			return $page;
+		}
+	}
+
+})(jQuery);
+
+var updatePageController = (function($) {
+
+	function create(data) {
+
+		var page = "<form class='updatepage'>";
+		if(typeof data.Config.Base.FormIdLst != "undefined" && typeof data.Config.Form != "undefined") {
+			page += createUpdateFormModule(data.Config.Base.FormIdLst, data.Config.Form);
+		}
+		if(typeof data.Config.Base.BtnIdLst != "undefined" && typeof data.Config.Btn != "undefined") {
+			page += createButtonModule(data.Config.Base.BtnIdLst, data.Config.Btn);
+		}
+		page +="</form>"
+		return $(page);
+	}
+
+	function createUpdateFormModule(list, data) {
+		var array = list.split(",");
+		var page = "";
+		if(array.length == 0) {
+			return page;
+		}
+		page = "<div class='updatePageForm' UI_RESIZE='height'>";
+		for(var i = 0; i < array.length; i++) {
+			var item = data[array[i]];
+			if(item.FormType == "text") {
+				page += "<div class='formitem'><span>" + item.FormName + ":</span><input name='" + item.FormId + "' type='" + item.FormType + "' value='" + (item.PreValue || item.DefaultVal) + "'></div>";
+				page += "<input type='hidden' name='old_" + item.FormId + "' value='" + (item.PreValue || item.DefaultVal) + "'/>";
+			}
+			else if(item.FormType == "radio") {
+				page += "<div class='formitem'><span>" + item.FormName + ":</span>";
+				var radioArray = item.ValLst.split(",");
+				for(var j = 0; j < radioArray.length; j++) {
+					var key = radioArray[j].substring(0, radioArray[j].indexOf(":"));
+					var value = radioArray[j].substring(radioArray[j].indexOf(":") + 1);
+					if(key == item.PreValue) {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'  checked='checked'/>" + value;
+						page += "<input type='hidden' name='old_" + item.FormId + "' value='" + (item.PreValue || item.DefaultVal) + "'/>";
+					}
+					else {
+						page += "<input name='" + item.FormId + "' type='" + item.FormType + "' value='" + key + "'/>" + value;
+						page += "<input type='hidden' name='old_" + item.FormId + "' value='" + (item.PreValue || item.DefaultVal) + "'/>";
 					}
 				}
 				page += "</div>";
