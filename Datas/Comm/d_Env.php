@@ -35,17 +35,22 @@ function GetDeleteSqlByParam($DBID, $PageId){
 
 	$str1 = "";
 	foreach ($tmp as $key => $value) {
-		$PostType = $value["PostType"];
 		$FieldId = $value["FieldId"];
-		if($PostType == "get"){
-			$v = ToolMethod::Instance()->GetUrlParam($FieldId);
-		}
-		else if($PostType == "post"){
-			$v = ToolMethod::Instance()->GetPostParam($FieldId);
-		}
-		$str1 .= " and ".$FieldId." in (".$v.")";//单条删除、多条删除
+		$str1 .= $FieldId.",";
 	}
-	return "delete from ".$tb." where ".ltrim($str1, " and");
+
+	$DelPK = ToolMethod::Instance()->GetUrlParam("DelPK");
+	if($DelPK == ""){
+		$DelPK = ToolMethod::Instance()->GetPostParam("DelPK");
+	}
+
+	$DelPK = explode(",", $DelPK);
+	$str2 = "";
+	foreach ($DelPK as $key => $value) {
+		$str2 .= "'".$value."',";
+	}
+
+	return "delete from ".$tb." where concat(".rtrim($str1, ",").") in (".rtrim($str2, ",").")";
 }
 
 
